@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
     );
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        hostname: "aqua-tricky-mammal-620.mypinata.cloud",
+        protocol: "https",
+        pathname: "**",
+        port: "",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

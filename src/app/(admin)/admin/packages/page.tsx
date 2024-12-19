@@ -11,16 +11,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { H2 } from "@/components/ui/typography";
+import React from "react";
 import StashPlusDuotone from "~icons/stash/plus-duotone.jsx";
 
 const AdminPackagesPage = () => {
+  const [formOpen, setFormOpen] = React.useState(false);
+
   return (
     <div className="flex flex-col gap-4 p-2">
       <div>
         <H2 className="flex py-4 items-center justify-between">
           <span>Packages</span>
 
-          <Dialog>
+          <Dialog open={formOpen} onOpenChange={setFormOpen}>
             <DialogTrigger asChild>
               <Button variant="outline">
                 <StashPlusDuotone />
@@ -31,7 +34,7 @@ const AdminPackagesPage = () => {
               <DialogHeader>
                 <DialogTitle>Create Package</DialogTitle>
               </DialogHeader>
-              <SubscriptionPackageForm />
+              <SubscriptionPackageForm onSuccess={() => setFormOpen(false)} />
             </DialogContent>
           </Dialog>
         </H2>

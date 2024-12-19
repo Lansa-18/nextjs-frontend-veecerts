@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const formSchema = z
@@ -43,6 +44,7 @@ const SigninPage = () => {
       input: value,
     });
     if (res.data) {
+      toast.success("Account created");
       router.replace("/signin");
     }
   };

@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -42,6 +43,7 @@ const SigninPage = () => {
         token: res.data.emailPasswordSignin.token,
         refreshToken: res.data.emailPasswordSignin.refreshToken,
       });
+      toast.success("Sign in success");
       router.replace("/app");
     }
   };

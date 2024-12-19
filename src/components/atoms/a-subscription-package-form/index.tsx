@@ -12,35 +12,51 @@ import {
 import { Input } from "@/components/ui/input";
 import { useCreateUpdateSubscriptionPackageMutation } from "@/lib/services/graphql/generated";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string({ message: "Please enter package name" }),
-  price: z.number({ message: "Please enter package price" }),
-  storageCapacityMb: z.number({
+  price: z.string({ message: "Please enter package price" }),
+  storageCapacityMb: z.string({
     message: "Please enter package storace capacity",
   }),
-  maxAllowedSessions: z.number({
+  maxAllowedSessions: z.string({
     message: "Please enter package max allowed sessions",
   }),
-  monthlyRequests: z.number({
+  monthlyRequests: z.string({
     message: "Please enter package max monthly requests",
   }),
 });
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const SubscriptionPackageForm = () => {
+interface Props {
+  onSuccess?: () => void;
+}
+
+const SubscriptionPackageForm: React.FC<Props> = ({ onSuccess }) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
   const [{ fetching }, mutate] = useCreateUpdateSubscriptionPackageMutation();
 
   const onSubmit = async (value: FormSchema) => {
-    await mutate({
-      input: value,
+    const res = await mutate({
+      input: {
+        ...value,
+        price: Number(value.price),
+        storageCapacityMb: Number(value.storageCapacityMb),
+        maxAllowedSessions: Number(value.maxAllowedSessions),
+        monthlyRequests: Number(value.monthlyRequests),
+      },
     });
+    if (res.data?.createUpdateSubscriptionPackage) {
+      toast.success("Subscription package created");
+      onSuccess?.();
+    }
   };
 
   return (

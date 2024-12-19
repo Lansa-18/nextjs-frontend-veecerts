@@ -1,6 +1,6 @@
 import React from "react";
 import { PlugMobileProvider } from "@funded-labs/plug-mobile-sdk";
-import { PlugWindow } from "./types";
+import { PlugWindow, RequestTransferArgs } from "./types";
 import { useWalletStore } from "@/stores/plug-wallet";
 
 export const useWallet = () => {
@@ -81,9 +81,23 @@ export const useWallet = () => {
     }
   }, [setPublicKey, setError, mobileProvider, checkConnected]);
 
+  const requestTransfer = React.useCallback(
+    async (args: RequestTransferArgs) => {
+      if (typeof window !== "undefined") {
+        const Window = window as PlugWindow;
+        return await Window.ic?.plug?.requestTransfer(args);
+      } else {
+        throw new Error("window is undefined", {
+          cause: "invalid-environment",
+        });
+      }
+    },
+    [],
+  );
+
   React.useEffect(() => {
     checkConnected();
   }, [checkConnected]);
 
-  return { connect, wallet };
+  return { connect, wallet, requestTransfer };
 };

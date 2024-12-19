@@ -17,13 +17,13 @@ const SubscriptionPackages = () => {
           Array.from({ length: 5 }).map((_, index) => (
             <Skeleton
               key={index}
-              className="w-full aspect-[9/7] rounded-2xl lg:aspect-video"
+              className="w-full aspect-[9/7] rounded-2xl lg:aspect-[16/5]"
             />
           ))}
-        {!fetching && (data?.subscriptionPackages ?? []).length === 0 && (
-          <EmptyList label="No subscription packages" />
-        )}
       </ul>
+      {!fetching && (data?.subscriptionPackages ?? []).length === 0 && (
+        <EmptyList label="No subscription packages" />
+      )}
     </div>
   );
 };
