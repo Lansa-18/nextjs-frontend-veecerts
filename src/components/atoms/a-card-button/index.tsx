@@ -3,11 +3,13 @@ import { Button } from "@/components/ui/button";
 interface Props {
   children?: React.ReactNode;
   icon?: React.ReactNode;
+  onClick?: () => void;
 }
 
-const CardButton: React.FC<Props> = ({ children, icon }) => {
+const CardButton: React.FC<Props> = ({ children, icon, onClick }) => {
   return (
     <Button
+      onClick={onClick}
       className="h-auto w-full max-w-[200px] p-0 rounded-xl"
       variant="ghost"
     >

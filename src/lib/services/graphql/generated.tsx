@@ -18,12 +18,30 @@ export type Scalars = {
   Upload: { input: any; output: any; }
 };
 
+export type AssetFilter = {
+  contentType?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  maxSizeMb?: InputMaybe<Scalars['Float']['input']>;
+  minSizeMb?: InputMaybe<Scalars['Float']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type AssetInput = {
   description: Scalars['String']['input'];
   file: Scalars['Upload']['input'];
   folderId: Scalars['Int']['input'];
   name: Scalars['String']['input'];
   uuid?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type AssetOrdering = {
+  dateAdded?: InputMaybe<Scalars['Boolean']['input']>;
+  lastUpdated?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type AssetQueryOptions = {
+  filter?: InputMaybe<AssetFilter>;
+  ordering?: InputMaybe<AssetOrdering>;
 };
 
 export type AssetType = {
@@ -165,6 +183,12 @@ export type MutationRefreshTokenArgs = {
   refreshToken: Scalars['String']['input'];
 };
 
+export type PaginatedAssetQueryOptions = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  opts?: InputMaybe<AssetQueryOptions>;
+};
+
 export type PaginatedFolderQueryOptions = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -185,6 +209,8 @@ export type ProfileType = {
 export type Query = {
   __typename?: 'Query';
   clientFolders: Array<FolderType>;
+  folder: FolderType;
+  folderAssets: Array<AssetType>;
   subscriptionPackages: Array<SubscriptionPackageType>;
   user?: Maybe<UserType>;
 };
@@ -193,6 +219,17 @@ export type Query = {
 export type QueryClientFoldersArgs = {
   clientUuid: Scalars['ID']['input'];
   opts?: InputMaybe<PaginatedFolderQueryOptions>;
+};
+
+
+export type QueryFolderArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryFolderAssetsArgs = {
+  folderId: Scalars['ID']['input'];
+  opts?: InputMaybe<PaginatedAssetQueryOptions>;
 };
 
 export type SubscriptionPackageInput = {
@@ -271,6 +308,21 @@ export type ClientFoldersQueryVariables = Exact<{
 
 
 export type ClientFoldersQuery = { __typename?: 'Query', clientFolders: Array<{ __typename: 'FolderType', id: string, name: string, logoHash: string, uuid: string, description: string, dateAdded: string, totalSize: number, itemsCount: number }> };
+
+export type FolderQueryVariables = Exact<{
+  folderId: Scalars['ID']['input'];
+}>;
+
+
+export type FolderQuery = { __typename?: 'Query', folder: { __typename?: 'FolderType', name: string, uuid: string, id: string, description: string } };
+
+export type FolderAssetsQueryVariables = Exact<{
+  folderId: Scalars['ID']['input'];
+  opts?: InputMaybe<PaginatedAssetQueryOptions>;
+}>;
+
+
+export type FolderAssetsQuery = { __typename?: 'Query', folderAssets: Array<{ __typename?: 'AssetType', id: string, uuid: string, nftId: number, name: string, ipfsHash: string, description: string, contentType: string, dateAdded: string, lastUpdated: string }> };
 
 export type SubscriptionPackagesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -367,6 +419,39 @@ export const ClientFoldersDocument = gql`
 
 export function useClientFoldersQuery(options: Omit<Urql.UseQueryArgs<ClientFoldersQueryVariables>, 'query'>) {
   return Urql.useQuery<ClientFoldersQuery, ClientFoldersQueryVariables>({ query: ClientFoldersDocument, ...options });
+};
+export const FolderDocument = gql`
+    query Folder($folderId: ID!) {
+  folder(id: $folderId) {
+    name
+    uuid
+    id
+    description
+  }
+}
+    `;
+
+export function useFolderQuery(options: Omit<Urql.UseQueryArgs<FolderQueryVariables>, 'query'>) {
+  return Urql.useQuery<FolderQuery, FolderQueryVariables>({ query: FolderDocument, ...options });
+};
+export const FolderAssetsDocument = gql`
+    query FolderAssets($folderId: ID!, $opts: PaginatedAssetQueryOptions) {
+  folderAssets(folderId: $folderId, opts: $opts) {
+    id
+    uuid
+    nftId
+    name
+    ipfsHash
+    description
+    contentType
+    dateAdded
+    lastUpdated
+  }
+}
+    `;
+
+export function useFolderAssetsQuery(options: Omit<Urql.UseQueryArgs<FolderAssetsQueryVariables>, 'query'>) {
+  return Urql.useQuery<FolderAssetsQuery, FolderAssetsQueryVariables>({ query: FolderAssetsDocument, ...options });
 };
 export const SubscriptionPackagesDocument = gql`
     query SubscriptionPackages {

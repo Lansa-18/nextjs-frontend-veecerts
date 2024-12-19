@@ -40,7 +40,12 @@ const ClientFiles = () => {
 
         <Dialog open={folderFormOpen} onOpenChange={setFolderFormOpen}>
           <DialogTrigger asChild className="w-full max-w-[200px]">
-            <CardButton icon={<BiFolderPlus />}>New Folder</CardButton>
+            <CardButton
+              onClick={() => setFolderFormOpen((c) => !c)}
+              icon={<BiFolderPlus />}
+            >
+              New Folder
+            </CardButton>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
