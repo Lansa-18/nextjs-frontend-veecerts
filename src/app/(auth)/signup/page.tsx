@@ -11,10 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { H2, H4 } from "@/components/ui/typography";
-import {
-  useEmailPasswordSigninMutation,
-  useEmailPasswordSignupMutation,
-} from "@/lib/services/graphql/generated";
+import { useEmailPasswordSignupMutation } from "@/lib/services/graphql/generated";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
