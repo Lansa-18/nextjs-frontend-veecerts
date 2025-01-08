@@ -42,6 +42,7 @@ const SigninPage = () => {
       setAuthTokens({
         token: res.data.emailPasswordSignin.token,
         refreshToken: res.data.emailPasswordSignin.refreshToken,
+        dateAdded: new Date().toISOString(),
       });
       toast.success("Sign in success");
       router.replace("/app");

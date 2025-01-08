@@ -1,5 +1,6 @@
 "use client";
 
+import { isLessThanDayOld } from "@/lib/utils/date";
 import { getAuthTokens } from "@/lib/utils/localStorage";
 import React from "react";
 import { cacheExchange, Client, fetchExchange, Provider } from "urql";
@@ -11,7 +12,10 @@ const client = new Client({
     const token = getAuthTokens();
     return {
       headers: {
-        authorization: token?.token ? `Bearer ${token.token}` : "",
+        authorization:
+          (token?.token && isLessThanDayOld(token.dateAdded))
+            ? `Bearer ${token.token}`
+            : "",
       },
     };
   },
