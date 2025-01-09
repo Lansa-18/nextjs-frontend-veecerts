@@ -55,7 +55,7 @@ const SigninPage = () => {
   return (
     <section className="bg-greyish-white flex items-center justify-center min-h-screen font-poppins">
       <article className="w-[70%] border-red-500">
-        <div className="border-2 border-[rgba(102, 102, 102, 0.50)] flex items-center gap-10 justify-between rounded-[24px] p-[24px] bg-white">
+        <div className="border-2 border-grey-border flex items-center gap-10 justify-between rounded-[24px] p-[24px] bg-white">
           <article>
             <div className="flex flex-col gap-4">
               <Image
