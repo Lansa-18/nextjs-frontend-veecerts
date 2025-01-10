@@ -10,6 +10,14 @@ export default {
   theme: {
   	extend: {
   		colors: {
+			// colors from figma
+			"greyish-white": "#FBFBFB",
+			"form-label": "#666",
+			black2: "#333",
+			black3: "#111",
+			"grey-border": "rgba(102, 102, 102, 0.50)",
+			"grey-border2": "rgba(102, 102, 102, 0.50)",
+			blue: "#0D99D5",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -65,7 +73,10 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		fontFamily: {
+			poppins: ["Poppins", "serif"]
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
