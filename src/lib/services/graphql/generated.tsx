@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { gql } from 'urql';
 import * as Urql from 'urql';
 export type Maybe<T> = T | null;
@@ -54,6 +55,7 @@ export type AssetType = {
   lastUpdated: Scalars['String']['output'];
   name: Scalars['String']['output'];
   nftId: Scalars['Int']['output'];
+  sizeMb: Scalars['Float']['output'];
   uuid: Scalars['String']['output'];
 };
 
@@ -79,15 +81,29 @@ export type ClientPackageSubscriptionType = {
   dateAdded: Scalars['String']['output'];
   expiresAt: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  subscriptionPackage: SubscriptionPackageType;
   uuid: Scalars['String']['output'];
 };
 
 export type ClientType = {
   __typename?: 'ClientType';
+  activeSubscription?: Maybe<ClientPackageSubscriptionType>;
   apiSecretHash: Scalars['String']['output'];
+  dateAdded: Scalars['String']['output'];
+  fileStorageSummary: UserFileStorageSummary;
+  id: Scalars['ID']['output'];
+  lastUpdated: Scalars['String']['output'];
+  usage?: Maybe<ClientUsageType>;
+  uuid: Scalars['String']['output'];
+};
+
+export type ClientUsageType = {
+  __typename?: 'ClientUsageType';
+  activeSessions: Scalars['Int']['output'];
   dateAdded: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   lastUpdated: Scalars['String']['output'];
+  usedStorageMb: Scalars['Float']['output'];
   uuid: Scalars['String']['output'];
 };
 
@@ -208,28 +224,40 @@ export type ProfileType = {
 
 export type Query = {
   __typename?: 'Query';
+  client?: Maybe<ClientType>;
+  clientAssets: Array<AssetType>;
+  clientFolder: FolderType;
+  clientFolderAssets: Array<AssetType>;
   clientFolders: Array<FolderType>;
-  folder: FolderType;
-  folderAssets: Array<AssetType>;
   subscriptionPackages: Array<SubscriptionPackageType>;
   user?: Maybe<UserType>;
 };
 
 
-export type QueryClientFoldersArgs = {
-  clientUuid: Scalars['ID']['input'];
-  opts?: InputMaybe<PaginatedFolderQueryOptions>;
+export type QueryClientAssetsArgs = {
+  opts?: InputMaybe<PaginatedAssetQueryOptions>;
 };
 
 
-export type QueryFolderArgs = {
+export type QueryClientFolderArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type QueryFolderAssetsArgs = {
+export type QueryClientFolderAssetsArgs = {
   folderId: Scalars['ID']['input'];
   opts?: InputMaybe<PaginatedAssetQueryOptions>;
+};
+
+
+export type QueryClientFoldersArgs = {
+  opts?: InputMaybe<PaginatedFolderQueryOptions>;
+};
+
+export type StorageSummary = {
+  __typename?: 'StorageSummary';
+  count: Scalars['Int']['output'];
+  totalSize: Scalars['Int']['output'];
 };
 
 export type SubscriptionPackageInput = {
@@ -252,6 +280,16 @@ export type SubscriptionPackageType = {
   price: Scalars['Float']['output'];
   storageCapacityMb: Scalars['Float']['output'];
   uuid: Scalars['String']['output'];
+};
+
+export type UserFileStorageSummary = {
+  __typename?: 'UserFileStorageSummary';
+  audios: StorageSummary;
+  clientId?: Maybe<Scalars['Int']['output']>;
+  documents: StorageSummary;
+  images: StorageSummary;
+  others: StorageSummary;
+  videos: StorageSummary;
 };
 
 export type UserType = {
@@ -303,26 +341,32 @@ export type CreateUpdateClientPackageSubscriptionMutation = { __typename?: 'Muta
 
 export type ClientFoldersQueryVariables = Exact<{
   opts?: InputMaybe<PaginatedFolderQueryOptions>;
-  clientUuid: Scalars['ID']['input'];
 }>;
 
 
 export type ClientFoldersQuery = { __typename?: 'Query', clientFolders: Array<{ __typename: 'FolderType', id: string, name: string, logoHash: string, uuid: string, description: string, dateAdded: string, totalSize: number, itemsCount: number }> };
 
-export type FolderQueryVariables = Exact<{
+export type ClientFolderQueryVariables = Exact<{
   folderId: Scalars['ID']['input'];
 }>;
 
 
-export type FolderQuery = { __typename?: 'Query', folder: { __typename?: 'FolderType', name: string, uuid: string, id: string, description: string } };
+export type ClientFolderQuery = { __typename?: 'Query', clientFolder: { __typename?: 'FolderType', name: string, uuid: string, id: string, description: string } };
 
-export type FolderAssetsQueryVariables = Exact<{
+export type ClientFolderAssetsQueryVariables = Exact<{
   folderId: Scalars['ID']['input'];
   opts?: InputMaybe<PaginatedAssetQueryOptions>;
 }>;
 
 
-export type FolderAssetsQuery = { __typename?: 'Query', folderAssets: Array<{ __typename?: 'AssetType', id: string, uuid: string, nftId: number, name: string, ipfsHash: string, description: string, contentType: string, dateAdded: string, lastUpdated: string }> };
+export type ClientFolderAssetsQuery = { __typename?: 'Query', clientFolderAssets: Array<{ __typename?: 'AssetType', id: string, uuid: string, nftId: number, name: string, ipfsHash: string, description: string, contentType: string, dateAdded: string, lastUpdated: string, sizeMb: number }> };
+
+export type ClientAssetsQueryVariables = Exact<{
+  opts?: InputMaybe<PaginatedAssetQueryOptions>;
+}>;
+
+
+export type ClientAssetsQuery = { __typename?: 'Query', clientAssets: Array<{ __typename?: 'AssetType', id: string, uuid: string, nftId: number, name: string, ipfsHash: string, description: string, contentType: string, dateAdded: string, lastUpdated: string, sizeMb: number }> };
 
 export type SubscriptionPackagesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -333,6 +377,11 @@ export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type UserQuery = { __typename?: 'Query', user?: { __typename: 'UserType', id: string, uuid: string, email: string, client?: { __typename: 'ClientType', id: string, uuid: string } | null, profile?: { __typename: 'ProfileType', id: string, imageHash?: string | null, uuid: string, lastName?: string | null, firstName?: string | null } | null } | null };
+
+export type ClientQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClientQuery = { __typename?: 'Query', client?: { __typename?: 'ClientType', id: string, uuid: string, fileStorageSummary: { __typename?: 'UserFileStorageSummary', audios: { __typename?: 'StorageSummary', count: number, totalSize: number }, documents: { __typename?: 'StorageSummary', count: number, totalSize: number }, images: { __typename?: 'StorageSummary', count: number, totalSize: number }, others: { __typename?: 'StorageSummary', count: number, totalSize: number }, videos: { __typename?: 'StorageSummary', count: number, totalSize: number } }, usage?: { __typename?: 'ClientUsageType', id: string, uuid: string, usedStorageMb: number } | null, activeSubscription?: { __typename?: 'ClientPackageSubscriptionType', id: string, uuid: string, amount: number, subscriptionPackage: { __typename?: 'SubscriptionPackageType', uuid: string, id: string, storageCapacityMb: number, name: string, price: number, maxAllowedSessions: number, monthlyRequests: number } } | null } | null };
 
 
 export const CreateUpdateFolderDocument = gql`
@@ -402,8 +451,8 @@ export function useCreateUpdateClientPackageSubscriptionMutation() {
   return Urql.useMutation<CreateUpdateClientPackageSubscriptionMutation, CreateUpdateClientPackageSubscriptionMutationVariables>(CreateUpdateClientPackageSubscriptionDocument);
 };
 export const ClientFoldersDocument = gql`
-    query ClientFolders($opts: PaginatedFolderQueryOptions, $clientUuid: ID!) {
-  clientFolders(opts: $opts, clientUuid: $clientUuid) {
+    query ClientFolders($opts: PaginatedFolderQueryOptions) {
+  clientFolders(opts: $opts) {
     __typename
     id
     name
@@ -417,12 +466,12 @@ export const ClientFoldersDocument = gql`
 }
     `;
 
-export function useClientFoldersQuery(options: Omit<Urql.UseQueryArgs<ClientFoldersQueryVariables>, 'query'>) {
+export function useClientFoldersQuery(options?: Omit<Urql.UseQueryArgs<ClientFoldersQueryVariables>, 'query'>) {
   return Urql.useQuery<ClientFoldersQuery, ClientFoldersQueryVariables>({ query: ClientFoldersDocument, ...options });
 };
-export const FolderDocument = gql`
-    query Folder($folderId: ID!) {
-  folder(id: $folderId) {
+export const ClientFolderDocument = gql`
+    query ClientFolder($folderId: ID!) {
+  clientFolder(id: $folderId) {
     name
     uuid
     id
@@ -431,12 +480,12 @@ export const FolderDocument = gql`
 }
     `;
 
-export function useFolderQuery(options: Omit<Urql.UseQueryArgs<FolderQueryVariables>, 'query'>) {
-  return Urql.useQuery<FolderQuery, FolderQueryVariables>({ query: FolderDocument, ...options });
+export function useClientFolderQuery(options: Omit<Urql.UseQueryArgs<ClientFolderQueryVariables>, 'query'>) {
+  return Urql.useQuery<ClientFolderQuery, ClientFolderQueryVariables>({ query: ClientFolderDocument, ...options });
 };
-export const FolderAssetsDocument = gql`
-    query FolderAssets($folderId: ID!, $opts: PaginatedAssetQueryOptions) {
-  folderAssets(folderId: $folderId, opts: $opts) {
+export const ClientFolderAssetsDocument = gql`
+    query ClientFolderAssets($folderId: ID!, $opts: PaginatedAssetQueryOptions) {
+  clientFolderAssets(folderId: $folderId, opts: $opts) {
     id
     uuid
     nftId
@@ -446,12 +495,33 @@ export const FolderAssetsDocument = gql`
     contentType
     dateAdded
     lastUpdated
+    sizeMb
   }
 }
     `;
 
-export function useFolderAssetsQuery(options: Omit<Urql.UseQueryArgs<FolderAssetsQueryVariables>, 'query'>) {
-  return Urql.useQuery<FolderAssetsQuery, FolderAssetsQueryVariables>({ query: FolderAssetsDocument, ...options });
+export function useClientFolderAssetsQuery(options: Omit<Urql.UseQueryArgs<ClientFolderAssetsQueryVariables>, 'query'>) {
+  return Urql.useQuery<ClientFolderAssetsQuery, ClientFolderAssetsQueryVariables>({ query: ClientFolderAssetsDocument, ...options });
+};
+export const ClientAssetsDocument = gql`
+    query ClientAssets($opts: PaginatedAssetQueryOptions) {
+  clientAssets(opts: $opts) {
+    id
+    uuid
+    nftId
+    name
+    ipfsHash
+    description
+    contentType
+    dateAdded
+    lastUpdated
+    sizeMb
+  }
+}
+    `;
+
+export function useClientAssetsQuery(options?: Omit<Urql.UseQueryArgs<ClientAssetsQueryVariables>, 'query'>) {
+  return Urql.useQuery<ClientAssetsQuery, ClientAssetsQueryVariables>({ query: ClientAssetsDocument, ...options });
 };
 export const SubscriptionPackagesDocument = gql`
     query SubscriptionPackages {
@@ -497,4 +567,57 @@ export const UserDocument = gql`
 
 export function useUserQuery(options?: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'>) {
   return Urql.useQuery<UserQuery, UserQueryVariables>({ query: UserDocument, ...options });
+};
+export const ClientDocument = gql`
+    query Client {
+  client {
+    id
+    uuid
+    fileStorageSummary {
+      audios {
+        count
+        totalSize
+      }
+      documents {
+        count
+        totalSize
+      }
+      images {
+        count
+        totalSize
+      }
+      others {
+        count
+        totalSize
+      }
+      videos {
+        count
+        totalSize
+      }
+    }
+    usage {
+      id
+      uuid
+      usedStorageMb
+    }
+    activeSubscription {
+      id
+      uuid
+      amount
+      subscriptionPackage {
+        uuid
+        id
+        storageCapacityMb
+        name
+        price
+        maxAllowedSessions
+        monthlyRequests
+      }
+    }
+  }
+}
+    `;
+
+export function useClientQuery(options?: Omit<Urql.UseQueryArgs<ClientQueryVariables>, 'query'>) {
+  return Urql.useQuery<ClientQuery, ClientQueryVariables>({ query: ClientDocument, ...options });
 };
