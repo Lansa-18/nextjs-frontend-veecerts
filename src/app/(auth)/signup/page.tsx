@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -40,11 +40,15 @@ const SigninPage = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
-  const [{ fetching }, mutate] = useEmailPasswordSignupMutation();
+  const [{ fetching, error }, mutate] = useEmailPasswordSignupMutation();
 
   const onSubmit = async (value: FormSchema) => {
     const res = await mutate({
-      input: value,
+      input: {
+        email: value.email,
+        password1: value.password1,
+        password2: value.password2
+      },
     });
     if (res.data) {
       toast.success("Account created");
@@ -52,11 +56,17 @@ const SigninPage = () => {
     }
   };
 
+  React.useEffect(() => {
+    if (error && error.graphQLErrors.length > 0) {
+      error.graphQLErrors.map(e => toast.error(e.message))
+    }
+  }, [error])
+
   return (
-    <section className="bg-greyish-white flex items-center justify-center min-h-screen font-poppins">
-      <article className="w-[70%]">
-        <div className="border-2 border-grey-border flex items-center gap-10 justify-between rounded-[24px] p-[24px] bg-white">
-          <article>
+    <section className="bg-greyish-white p-10 px-4 flex items-center justify-center min-h-screen font-poppins">
+      <article className="w-full flex items-center justify-center flex-col">
+        <div className="max-w-[1300px] border-2 border-grey-border w-full flex items-center gap-10 justify-between rounded-[24px] p-[24px] bg-white">
+          <article className="w-full">
             <div className="flex flex-col gap-4">
               <Image
                 src="/veecerts-logo.svg"
@@ -65,30 +75,30 @@ const SigninPage = () => {
                 height={101}
               />
               <div className="flex flex-col items-start mb-4">
-                <p className="text-3xl font-medium leading-normal text-black2">
+                <p className="text-2xl sm:text-3xl font-medium leading-normal text-black2">
                   Create new account
                 </p>
                 <p className="-mt-1">
-                  Already have an account?{" "}
+                  Already have an account?
                   <Link className="text-blue-500" href="/signin">
                     Log In
                   </Link>
                 </p>
               </div>
             </div>
-            <div>
+            <div className="w-full flex flex-col-reverse gap-8 md:flex-row items-center">
               <Form {...form}>
                 <form
-                  className="flex flex-col gap-4 font-poppins"
+                  className="flex flex-col w-full gap-4 font-poppins"
                   onSubmit={form.handleSubmit(onSubmit)}
                 >
-                  <div className="flex gap-4">
+                  <div className="flex w-full flex-col lg:flex-row gap-4">
                     <FormField
                       control={form.control}
                       name="firstName"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-form-label font-normal text-[13px]">
+                        <FormItem className="w-full">
+                          <FormLabel className="text-form-label font-normal text-sm">
                             First Name
                           </FormLabel>
                           <FormControl>
@@ -102,8 +112,8 @@ const SigninPage = () => {
                       control={form.control}
                       name="lastName"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-form-label font-normal text-[13px]">
+                        <FormItem className="w-full">
+                          <FormLabel className="text-form-label font-normal text-sm">
                             Last Name
                           </FormLabel>
                           <FormControl>
@@ -119,7 +129,7 @@ const SigninPage = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-form-label font-normal text-[13px]">
+                        <FormLabel className="text-form-label font-normal text-sm">
                           Email address
                         </FormLabel>
                         <FormControl>
@@ -129,13 +139,13 @@ const SigninPage = () => {
                       </FormItem>
                     )}
                   />
-                  <div className="flex gap-4">
+                  <div className="flex w-full flex-col lg:flex-row gap-4">
                     <FormField
                       control={form.control}
                       name="password1"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-form-label font-normal text-[13px]">
+                        <FormItem className="w-full">
+                          <FormLabel className="text-form-label font-normal text-sm">
                             Password
                           </FormLabel>
                           <FormControl>
@@ -153,8 +163,8 @@ const SigninPage = () => {
                       control={form.control}
                       name="password2"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-form-label font-normal text-[13px]">
+                        <FormItem className="w-full">
+                          <FormLabel className="text-form-label font-normal text-sm">
                             Confirm Password
                           </FormLabel>
                           <FormControl>
@@ -174,7 +184,7 @@ const SigninPage = () => {
                     symbols.
                   </p>
                   <Button
-                    className="bg-blue rounded-[32px] w-[35%] py-6 mt-2"
+                    className="bg-blue rounded-[32px] w-full py-6 mt-2"
                     loading={fetching}
                     disabled={fetching}
                   >
@@ -185,6 +195,7 @@ const SigninPage = () => {
               <Image
                 src="/signup-img.png"
                 alt="signup-img"
+                className="w-full max-w-[500px]"
                 width={358}
                 height={339}
               />

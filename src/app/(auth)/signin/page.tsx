@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,11 +12,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// import { H2 } from "@/components/ui/typography";
 import { useEmailPasswordSigninMutation } from "@/lib/services/graphql/generated";
 import { setAuthTokens } from "@/lib/utils/localStorage";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -38,7 +37,13 @@ const SigninPage = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
-  const [{ fetching }, mutate] = useEmailPasswordSigninMutation();
+  const [{ fetching, error }, mutate] = useEmailPasswordSigninMutation();
+
+  React.useEffect(() => {
+    if (error && error.graphQLErrors.length > 0) {
+      error.graphQLErrors.map(e => toast.error(e.message))
+    }
+  }, [error])
 
   const onSubmit = async (value: FormSchema) => {
     const res = await mutate({
@@ -56,8 +61,8 @@ const SigninPage = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen font-poppins">
-      <div className="flex flex-col w-[60%]">
+    <section className="flex items-center p-10 px-4 md:px-20 lg:px-40 justify-center min-h-screen font-poppins">
+      <div className="flex flex-col w-full">
         <article className="self-center">
           <div className="flex flex-col gap-4 items-center">
             <Image
@@ -69,9 +74,9 @@ const SigninPage = () => {
             <h1 className="text-3xl font-medium text-black2 -mt-8">Log In</h1>
           </div>
         </article>
-        <article className="flex border-red-500 mt-10">
-          <div className="space-y-3 border-black w-[50%] px-12 py-6">
-            <h2 className="text-black3 font-medium text-2xl text-center mb-5">
+        <article className="flex flex-col items-center xl:flex-row border-red-500 mt-10">
+          <div className="border-black flex flex-col w-full md:px-12 py-6">
+            <h2 className="text-black3 font-medium text-2xl hidden xl:block text-center mb-5">
               Log In
             </h2>
             <Form {...form}>
@@ -123,7 +128,7 @@ const SigninPage = () => {
                   )}
                 />
                 <Button
-                  className="bg-blue rounded-[32px] py-6 mt-2"
+                  className="bg-blue rounded-[32px] py-6 mt-2 w-full"
                   loading={fetching}
                   disabled={fetching}
                 >
@@ -133,13 +138,13 @@ const SigninPage = () => {
             </Form>
           </div>
 
-          <div className="flex flex-col gap-3 items-center">
-            <span className="border h-[150px] w-[1px] border-grey-border2"></span>
+          <div className="flex xl:flex-col gap-3 xl:w-fit w-full items-center">
+            <span className="border h-px w-full xl:h-[150px] xl:w-px border-grey-border2"></span>
             <p>OR</p>
-            <span className="border h-[150px] w-[1px] border-grey-border2"></span>
+            <span className="border h-px w-full xl:h-[150px] xl:w-px border-grey-border2"></span>
           </div>
 
-          <div className=" border-blue w-[50%] px-12 py-6 flex items-center">
+          <div className=" border-blue w-full md:px-12 py-6 flex items-center">
             <div className="space-y-5 w-full ">
               <LoginAuthButton
                 icon="/google-logo.svg"

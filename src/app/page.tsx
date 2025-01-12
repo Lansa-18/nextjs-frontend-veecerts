@@ -1,3 +1,5 @@
+"use client";
+
 import HorCard from "@/components/card/hor_card";
 import VerCard from "@/components/card/ver_card";
 import FAQ from "@/components/faq";
@@ -5,12 +7,13 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Percent from "@/components/percent_card";
 import PricingTable from "@/components/pricing";
-import Pricing from "@/components/pricing";
 import Steps from "@/components/steps";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <>
       <Navbar />
@@ -275,10 +278,18 @@ export default function Home() {
 
           {/* Buttons Section */}
           <div className="flex flex-col lg:flex-row gap-4 mt-7 lg:mt-4">
-            <Button className="w-full lg:w-auto p-6 lg:p-6" variant="secondary">
+            <Button
+              onClick={() => router.push("/signin")}
+              className="w-full lg:w-auto p-6 lg:p-6"
+              variant="secondary"
+            >
               Log in
             </Button>
-            <Button className="w-full lg:w-auto p-6 lg:p-6" variant="default">
+            <Button
+              onClick={() => router.push("/signup")}
+              className="w-full lg:w-auto p-6 lg:p-6"
+              variant="default"
+            >
               Create an account
             </Button>
           </div>

@@ -1,10 +1,12 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
@@ -46,7 +48,9 @@ export default function Navbar() {
         <div className="hidden lg:flex gap-5">
           {navLinks.map((link, index) => (
             <div key={index}>
-              <span className="text-gray-600 hover:text-gray-800">{link.name}</span>
+              <span className="text-gray-600 hover:text-gray-800">
+                {link.name}
+              </span>
             </div>
           ))}
         </div>
@@ -54,8 +58,12 @@ export default function Navbar() {
         {/* Language and Buttons */}
         <div className="hidden lg:flex items-center gap-5">
           <span className="pt-2">English</span>
-          <Button variant="secondary">Sign in</Button>
-          <Button variant="default">Create an account</Button>
+          <Button onClick={() => router.push("/signin")} variant="secondary">
+            Sign in
+          </Button>
+          <Button onClick={() => router.push("/signup")} variant="default">
+            Create an account
+          </Button>
         </div>
       </div>
 
@@ -69,7 +77,9 @@ export default function Navbar() {
         <div className="flex flex-col gap-5 text-gray">
           {navLinks.map((link, index) => (
             <div key={index}>
-              <span className="text-gray-600 hover:text-gray-800">{link.name}</span>
+              <span className="text-gray-600 hover:text-gray-800">
+                {link.name}
+              </span>
             </div>
           ))}
         </div>
