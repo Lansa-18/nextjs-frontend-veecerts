@@ -1,7 +1,6 @@
 "use client";
 
 import CardButton from "@/components/atoms/a-card-button";
-import IconParkOutlinePlus from "~icons/icon-park-outline/plus.jsx";
 import BiFolderPlus from "~icons/bi/folder-plus.jsx";
 import { H4 } from "@/components/ui/typography";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,9 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import AssetForm from "@/components/molecules/m-asset-form";
 import FolderList from "@/components/molecules/m-folder-list";
-import FolderForm from "@/components/layouts/m-folder-form";
+import FolderForm from "@/components/atoms/a-folder-form";
 import React from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -26,18 +24,6 @@ const ClientFiles = () => {
   return (
     <div className="p-4 flex flex-col gap-10">
       <div className="flex items-center max-w-[500px] gap-4">
-        <Dialog>
-          <DialogTrigger asChild className="w-full max-w-[200px]">
-            <CardButton icon={<IconParkOutlinePlus />}>New Document</CardButton>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Upload File</DialogTitle>
-            </DialogHeader>
-            <AssetForm />
-          </DialogContent>
-        </Dialog>
-
         <Dialog open={folderFormOpen} onOpenChange={setFolderFormOpen}>
           <DialogTrigger asChild className="w-full max-w-[200px]">
             <CardButton

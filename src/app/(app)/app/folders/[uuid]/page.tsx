@@ -14,6 +14,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import AssetTables from "@/components/molecules/m-assets-table";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import AssetForm from "@/components/molecules/m-asset-form";
 
 interface Props {
   params: Promise<{
@@ -23,6 +25,7 @@ interface Props {
 
 const FolderDetailsPage: React.FC<Props> = ({ params }) => {
   const { uuid } = React.use(params);
+  const [formOpen, setFormOpen] = React.useState(false)
   const [{ data, fetching }] = useClientFolderQuery({
     variables: {
       folderId: uuid,
@@ -44,16 +47,25 @@ const FolderDetailsPage: React.FC<Props> = ({ params }) => {
                   <span className="sr-only">Info</span>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p className="max-w-[300px]">{data?.clientFolder.description}</p>
+                  <p className="max-w-[300px]">
+                    {data?.clientFolder.description}
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
           </div>
         )}
-        <Button className="flex gap-1">
-          <LineMdUploadLoop />
-          <span>Upload File</span>
-        </Button>
+        <Dialog open={formOpen} onOpenChange={setFormOpen}>
+          <DialogTrigger>
+            <Button className="flex gap-1">
+              <LineMdUploadLoop />
+              <span>Upload File</span>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <AssetForm onSuccess={() => setFormOpen(false)} folderUuid={uuid} />
+          </DialogContent>
+        </Dialog>
       </H2>
       <div className="mt-8 p-4">
         <AssetTables folderUuid={uuid} />

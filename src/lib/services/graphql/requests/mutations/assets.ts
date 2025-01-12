@@ -9,3 +9,12 @@ export const CREATE_UPDATE_FOLDER = gql`
     }
   }
 `;
+
+export const CREATE_UPDATE_ASSET = gql`
+  mutation CreateUpdateAsset($input: AssetInput!) {
+    createUpdateAsset(input: $input) {
+      id
+      uuid
+    }
+  }
+`;

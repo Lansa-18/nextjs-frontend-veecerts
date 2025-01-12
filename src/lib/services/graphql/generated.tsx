@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { gql } from 'urql';
 import * as Urql from 'urql';
 export type Maybe<T> = T | null;
@@ -30,7 +29,7 @@ export type AssetFilter = {
 export type AssetInput = {
   description: Scalars['String']['input'];
   file: Scalars['Upload']['input'];
-  folderId: Scalars['Int']['input'];
+  folderUuid: Scalars['String']['input'];
   name: Scalars['String']['input'];
   uuid?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -311,6 +310,13 @@ export type CreateUpdateFolderMutationVariables = Exact<{
 
 export type CreateUpdateFolderMutation = { __typename?: 'Mutation', createUpdateFolder: { __typename: 'FolderType', id: string, uuid: string } };
 
+export type CreateUpdateAssetMutationVariables = Exact<{
+  input: AssetInput;
+}>;
+
+
+export type CreateUpdateAssetMutation = { __typename?: 'Mutation', createUpdateAsset: { __typename?: 'AssetType', id: string, uuid: string } };
+
 export type EmailPasswordSigninMutationVariables = Exact<{
   input: EmailPasswordSigninInput;
 }>;
@@ -396,6 +402,18 @@ export const CreateUpdateFolderDocument = gql`
 
 export function useCreateUpdateFolderMutation() {
   return Urql.useMutation<CreateUpdateFolderMutation, CreateUpdateFolderMutationVariables>(CreateUpdateFolderDocument);
+};
+export const CreateUpdateAssetDocument = gql`
+    mutation CreateUpdateAsset($input: AssetInput!) {
+  createUpdateAsset(input: $input) {
+    id
+    uuid
+  }
+}
+    `;
+
+export function useCreateUpdateAssetMutation() {
+  return Urql.useMutation<CreateUpdateAssetMutation, CreateUpdateAssetMutationVariables>(CreateUpdateAssetDocument);
 };
 export const EmailPasswordSigninDocument = gql`
     mutation EmailPasswordSignin($input: EmailPasswordSigninInput!) {

@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 import Dropzone from "shadcn-dropzone";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import React from "react";
+import { useCreateUpdateAssetMutation } from "@/lib/services/graphql/generated";
 
 const formSchema = z.object({
   name: z.string({ message: "Please enter file name" }),
@@ -25,14 +27,35 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const AssetForm = () => {
+interface Props {
+  folderUuid: string;
+  onSuccess?: () => void;
+}
+
+const AssetForm: React.FC<Props> = ({ folderUuid, onSuccess }) => {
+  const [{ fetching }, mutate] = useCreateUpdateAssetMutation();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
+  const onSubmit = async (value: FormSchema) => {
+    mutate({
+      input: {
+        folderUuid,
+        name: value.name,
+        file: value.file,
+        description: value.description,
+      },
+    });
+    onSuccess?.()
+  };
+
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4">
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="name"
@@ -74,7 +97,9 @@ const AssetForm = () => {
             </FormItem>
           )}
         />
-        <Button>Save</Button>
+        <Button disabled={fetching} loading={fetching}>
+          Save
+        </Button>
       </form>
     </Form>
   );

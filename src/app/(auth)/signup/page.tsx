@@ -54,7 +54,7 @@ const SigninPage = () => {
 
   return (
     <section className="bg-greyish-white flex items-center justify-center min-h-screen font-poppins">
-      <article className="w-[70%] border-red-500">
+      <article className="w-[70%]">
         <div className="border-2 border-grey-border flex items-center gap-10 justify-between rounded-[24px] p-[24px] bg-white">
           <article>
             <div className="flex flex-col gap-4">
@@ -76,119 +76,119 @@ const SigninPage = () => {
                 </p>
               </div>
             </div>
-            <Form {...form}>
-              <form
-                className="flex flex-col gap-4 font-poppins"
-                onSubmit={form.handleSubmit(onSubmit)}
-              >
-                <div className="flex gap-4">
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-form-label font-normal text-[13px]">
-                          First Name
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder="John" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-form-label font-normal text-[13px]">
-                          Last Name
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder="Doe" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-form-label font-normal text-[13px]">
-                        Email address
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder="johndoe@email.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <div className="flex gap-4">
-                  <FormField
-                    control={form.control}
-                    name="password1"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-form-label font-normal text-[13px]">
-                          Password
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="*********"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="password2"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-form-label font-normal text-[13px]">
-                          Confirm Password
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="*********"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <p className="text-sm -mt-2">
-                  Use 8 or more characters with a mix of numbers, letters and
-                  symbols.
-                </p>
-                <Button
-                  className="bg-blue rounded-[32px] w-[35%] py-6 mt-2"
-                  loading={fetching}
-                  disabled={fetching}
+            <div>
+              <Form {...form}>
+                <form
+                  className="flex flex-col gap-4 font-poppins"
+                  onSubmit={form.handleSubmit(onSubmit)}
                 >
-                  Create Account
-                </Button>
-              </form>
-            </Form>
-          </article>
-          <article>
-            <Image
-              src="/signup-img.png"
-              alt="signup-img"
-              width={358}
-              height={339}
-            />
+                  <div className="flex gap-4">
+                    <FormField
+                      control={form.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-form-label font-normal text-[13px]">
+                            First Name
+                          </FormLabel>
+                          <FormControl>
+                            <Input placeholder="John" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="lastName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-form-label font-normal text-[13px]">
+                            Last Name
+                          </FormLabel>
+                          <FormControl>
+                            <Input placeholder="Doe" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-form-label font-normal text-[13px]">
+                          Email address
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="johndoe@email.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="flex gap-4">
+                    <FormField
+                      control={form.control}
+                      name="password1"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-form-label font-normal text-[13px]">
+                            Password
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="*********"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="password2"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-form-label font-normal text-[13px]">
+                            Confirm Password
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="*********"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <p className="text-sm -mt-2">
+                    Use 8 or more characters with a mix of numbers, letters and
+                    symbols.
+                  </p>
+                  <Button
+                    className="bg-blue rounded-[32px] w-[35%] py-6 mt-2"
+                    loading={fetching}
+                    disabled={fetching}
+                  >
+                    Create Account
+                  </Button>
+                </form>
+              </Form>
+              <Image
+                src="/signup-img.png"
+                alt="signup-img"
+                width={358}
+                height={339}
+              />
+            </div>
           </article>
         </div>
 
