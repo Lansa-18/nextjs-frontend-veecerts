@@ -1,8 +1,8 @@
 import { gql } from "urql";
 
 export const CLIENT_FOLDERS = gql`
-  query ClientFolders($opts: PaginatedFolderQueryOptions, $clientUuid: ID!) {
-    clientFolders(opts: $opts, clientUuid: $clientUuid) {
+  query ClientFolders($opts: PaginatedFolderQueryOptions) {
+    clientFolders(opts: $opts) {
       __typename
       id
       name
@@ -16,9 +16,9 @@ export const CLIENT_FOLDERS = gql`
   }
 `;
 
-export const FOLDER = gql`
-  query Folder($folderId: ID!) {
-    folder(id: $folderId) {
+export const CLIENT_FOLDER = gql`
+  query ClientFolder($folderId: ID!) {
+    clientFolder(id: $folderId) {
       name
       uuid
       id
@@ -27,9 +27,9 @@ export const FOLDER = gql`
   }
 `;
 
-export const FOLDER_ASSETS = gql`
-  query FolderAssets($folderId: ID!, $opts: PaginatedAssetQueryOptions) {
-    folderAssets(folderId: $folderId, opts: $opts) {
+export const CLIENT_FOLDER_ASSETS = gql`
+  query ClientFolderAssets($folderId: ID!, $opts: PaginatedAssetQueryOptions) {
+    clientFolderAssets(folderId: $folderId, opts: $opts) {
       id
       uuid
       nftId
@@ -39,6 +39,25 @@ export const FOLDER_ASSETS = gql`
       contentType
       dateAdded
       lastUpdated
+      sizeMb
+    }
+  }
+`;
+
+
+export const CLIENT_ASSETS = gql`
+  query ClientAssets($opts: PaginatedAssetQueryOptions) {
+    clientAssets(opts: $opts) {
+      id
+      uuid
+      nftId
+      name
+      ipfsHash
+      description
+      contentType
+      dateAdded
+      lastUpdated
+      sizeMb
     }
   }
 `;

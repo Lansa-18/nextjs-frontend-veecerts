@@ -38,3 +38,53 @@ export const USER = gql`
     }
   }
 `;
+
+export const CLIENT = gql`
+  query Client {
+    client {
+      id
+      uuid
+      fileStorageSummary {
+        audios {
+          count
+          totalSize
+        }
+        documents {
+          count
+          totalSize
+        }
+        images {
+          count
+          totalSize
+        }
+        others {
+          count
+          totalSize
+        }
+        videos {
+          count
+          totalSize
+        }
+      }
+      usage {
+        id
+        uuid
+        usedStorageMb
+      }
+      activeSubscription {
+        id
+        uuid
+        amount
+        subscriptionPackage {
+          uuid
+          id
+          storageCapacityMb
+          name
+          price
+          maxAllowedSessions
+          monthlyRequests
+        }
+      }
+    }
+  }
+`;

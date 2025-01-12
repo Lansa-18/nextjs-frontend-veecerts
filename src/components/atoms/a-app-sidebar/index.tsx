@@ -87,10 +87,8 @@ const AppSidebar: React.FC<Props> = ({ variant = "app" }) => {
                               <SidebarMenuSubItem
                                 key={subItem.url + subItem.name}
                               >
-                                <SidebarMenuSubButton>
-                                  <Link className="w-full" href={subItem.url}>
-                                    <span>{subItem.name}</span>
-                                  </Link>
+                                <SidebarMenuSubButton href={subItem.url}>
+                                  <span>{subItem.name}</span>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             ))}

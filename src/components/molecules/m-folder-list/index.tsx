@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+  InputMaybe,
+  PaginatedFolderQueryOptions,
   useClientFoldersQuery,
-  useUserQuery,
 } from "@/lib/services/graphql/generated";
 import { buildIpfsURL } from "@/lib/utils/urls";
 import Image from "next/image";
@@ -23,24 +24,25 @@ interface Props {
 
 const FolderList: React.FC<Props> = ({ variant }) => {
   const router = useRouter();
-  const [{ data: userData }] = useUserQuery();
-  const [{ fetching, data }] = useClientFoldersQuery({
-    variables: {
-      clientUuid: userData?.user?.client?.uuid ?? "",
+  const opts = React.useMemo(() => {
+    const opts: InputMaybe<PaginatedFolderQueryOptions> = {
       opts: {
-        opts: {
-          ordering: {
-            dateAdded:
-              variant === "oldest"
-                ? false
-                : variant === "recent"
-                  ? true
-                  : undefined,
-            lastUpdated: variant === "favourite",
-          },
+        ordering: {
+          dateAdded:
+            variant === "oldest"
+              ? false
+              : variant === "recent"
+                ? true
+                : undefined,
+          lastUpdated: variant === "favourite",
         },
       },
-    },
+    };
+    return opts;
+  }, [variant]);
+
+  const [{ fetching, data }] = useClientFoldersQuery({
+    variables: { opts },
   });
 
   return (
