@@ -11,13 +11,17 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-blue text-primary-foreground w-[194px] h-[42px] rounded-xl px-4 py-2",
+        primary:
+          "bg-transparent border-2 border-white w-[175px] h-[48px] px-7 py-4 rounded-xl",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+          "bg-transparent border-2 text-black border-black w-[112px] h-[42px] px-7 py-4 rounded-xl",
+          blue:
+          "bg-transparent border-2 text-blue border-blue w-[117px] h-[56px] px-7 py-4 rounded-xl",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -32,7 +36,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  },
+  }
 );
 
 export interface ButtonProps
@@ -45,7 +49,7 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     { className, children, loading, variant, size, asChild = false, ...props },
-    ref,
+    ref
   ) => {
     const Comp = asChild ? Slot : "button";
     return (
@@ -57,7 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? <SvgSpinnersRingResize /> : children}
       </Comp>
     );
-  },
+  }
 );
 Button.displayName = "Button";
 
