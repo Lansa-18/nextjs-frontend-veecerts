@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useWallet } from "@/hooks/plug-wallet";
 import {
   SubscriptionPackagesQuery,
+  useClientQuery,
   useCreateUpdateClientPackageSubscriptionMutation,
   useUserQuery,
 } from "@/lib/services/graphql/generated";
@@ -21,8 +22,15 @@ interface Props {
 const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
   const { requestTransfer } = useWallet();
   const [{ data }] = useUserQuery();
-  const [{ fetching }, mutate] =
+  const [{ data: clientData }] = useClientQuery();
+  const [{ fetching, error }, mutate] =
     useCreateUpdateClientPackageSubscriptionMutation();
+
+  React.useEffect(() => {
+    if (error && error.graphQLErrors.length > 0) {
+      error.graphQLErrors.map((e) => toast.error(e.message));
+    }
+  }, [error]);
 
   const handleSubscribe = async () => {
     if (!data?.user) {
@@ -33,27 +41,32 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
       toast.error("Subscription Package not found");
       return;
     }
-    const amount = icpToE8s(subscriptionPackage.price / 11.06);
-    const params: RequestTransferArgs = {
-      to: process.env.NEXT_PUBLIC_APP_PRINCIPAL_ID ?? "",
-      amount: amount > 0 ? amount : 0.000000001,
-      memo: `${data.user.id} x ${uuid4()}`,
-      opts: {
-        created_at_time: {
-          timestamp_nanos: new Date().getTime(),
+    try {
+      const amount = icpToE8s(subscriptionPackage.price ?? 1 / 11.06);
+      console.log({ amount });
+      const params: RequestTransferArgs = {
+        to: process.env.NEXT_PUBLIC_APP_PRINCIPAL_ID ?? "",
+        amount: amount > 0 ? amount : 0.000000001,
+        memo: `${data.user.id} x ${uuid4()}`,
+        opts: {
+          created_at_time: {
+            timestamp_nanos: new Date().getTime(),
+          },
         },
-      },
-    };
+      };
 
-    const res = await requestTransfer(params);
-    console.log({ res });
-    const subRes = await mutate({
-      input: {
-        subscriptionPackageUuid: subscriptionPackage.uuid,
-      },
-    });
-    if (subRes.data?.createUpdateClientPackageSubscription) {
-      toast.success("Subscription success");
+      const res = await requestTransfer(params);
+      console.log({ res });
+      const subRes = await mutate({
+        input: {
+          subscriptionPackageUuid: subscriptionPackage.uuid,
+        },
+      });
+      if (subRes.data?.createUpdateClientPackageSubscription) {
+        toast.success("Subscription success");
+      }
+    } catch (err) {
+      console.log({ err });
     }
   };
 
@@ -71,9 +84,16 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
           variant="outline"
           className="rounded-lg"
           loading={fetching}
-          disabled={fetching}
+          disabled={
+            fetching ||
+            clientData?.client?.activeSubscription?.subscriptionPackage
+              ?.uuid === subscriptionPackage?.uuid
+          }
         >
-          Select Plan
+          {clientData?.client?.activeSubscription?.subscriptionPackage?.uuid ===
+          subscriptionPackage?.uuid
+            ? "Active Plan"
+            : "Select Plan"}
         </Button>
       </div>
       <div className="flex-1 p-4">

@@ -15,6 +15,8 @@ import {
   useClientAssetsQuery,
 } from "@/lib/services/graphql/generated";
 import { getFileIcon } from "@/lib/utils/jsxElements";
+import { buildIpfsURL } from "@/lib/utils/urls";
+import Image from "next/image";
 import React from "react";
 
 interface Props {
@@ -54,7 +56,19 @@ const AssetsTable: React.FC<Props> = ({ folderUuid }) => {
               <TableCell>
                 <div className="flex items-center font-medium gap-2">
                   <span className="text-lg">
-                    {getFileIcon(asset.contentType)}
+                    {asset.contentType.startsWith("image") ? (
+                      <Image
+                        width={24}
+                        height={24}
+                        src={buildIpfsURL(asset.ipfsHash)}
+                        className="rounded"
+                        alt={asset.description}
+                      />
+                    ) : (
+                      <span className="text-xl">
+                        {getFileIcon(asset.contentType)}
+                      </span>
+                    )}
                   </span>
                   <span>{asset.name}</span>
                 </div>
@@ -73,25 +87,26 @@ const AssetsTable: React.FC<Props> = ({ folderUuid }) => {
               </TableCell>
             </TableRow>
           ))}
-          {fetching && Array.from({ length: 10 }).map((_, index) => (
-            <TableRow key={index}>
-              <TableCell>
-                <Skeleton className="h-6 w-full" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-6 w-full" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-6 w-full" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-6 w-full" />
-              </TableCell>
-              <TableCell>
-                <Skeleton className="h-6 w-full" />
-              </TableCell>
-            </TableRow>
-          ))}
+          {fetching &&
+            Array.from({ length: 10 }).map((_, index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  <Skeleton className="h-6 w-full" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-full" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-full" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-full" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton className="h-6 w-full" />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       {!fetching && assets.length === 0 && (

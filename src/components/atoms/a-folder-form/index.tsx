@@ -34,7 +34,7 @@ interface Props {
 
 const FolderForm: React.FC<Props> = ({ onSuccess }) => {
   const [image, setImage] = React.useState<File>();
-  const [{ fetching }, mutate] = useCreateUpdateFolderMutation();
+  const [{ fetching, error }, mutate] = useCreateUpdateFolderMutation();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
@@ -48,6 +48,12 @@ const FolderForm: React.FC<Props> = ({ onSuccess }) => {
       onSuccess?.();
     }
   };
+
+  React.useEffect(() => {
+    if (error && error.graphQLErrors.length > 0) {
+      error.graphQLErrors.map(e => toast.error(e.message))
+    }
+  }, [error])
 
   return (
     <Form {...form}>

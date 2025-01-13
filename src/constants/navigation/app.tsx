@@ -56,21 +56,9 @@ export const APP_NAVIGATION: SidebarGroup[] = [
     navs: [
       {
         type: "single",
-        name: "Team Members",
-        url: "/app/team",
-        icon: <FluentPeopleTeam48Regular />,
-      },
-      {
-        type: "single",
         name: "Billing",
         url: "/app/billing",
         icon: <MingcuteBill2Line />,
-      },
-      {
-        type: "single",
-        name: "Profile",
-        url: "/app/profile",
-        icon: <IconamoonProfile />,
       },
     ],
   },

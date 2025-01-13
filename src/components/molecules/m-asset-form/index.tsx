@@ -17,6 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useCreateUpdateAssetMutation } from "@/lib/services/graphql/generated";
+import Image from "next/image";
+import { getFileIcon } from "@/lib/utils/jsxElements";
 
 const formSchema = z.object({
   name: z.string({ message: "Please enter file name" }),
@@ -33,13 +35,14 @@ interface Props {
 }
 
 const AssetForm: React.FC<Props> = ({ folderUuid, onSuccess }) => {
+  const [file, setFile] = React.useState<File>();
   const [{ fetching }, mutate] = useCreateUpdateAssetMutation();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = async (value: FormSchema) => {
-    mutate({
+    await mutate({
       input: {
         folderUuid,
         name: value.name,
@@ -47,7 +50,7 @@ const AssetForm: React.FC<Props> = ({ folderUuid, onSuccess }) => {
         description: value.description,
       },
     });
-    onSuccess?.()
+    onSuccess?.();
   };
 
   return (
@@ -76,10 +79,36 @@ const AssetForm: React.FC<Props> = ({ folderUuid, onSuccess }) => {
             <FormItem>
               <FormLabel>File</FormLabel>
               <FormControl>
-                <Dropzone
-                  dropZoneClassName="py-8"
-                  onDrop={(accepted) => field.onChange(accepted.at(0))}
-                />
+                <div>
+                  <Dropzone
+                    dropZoneClassName="py-8"
+                    onDrop={(accepted) => {
+                      setFile(accepted.at(0));
+                      field.onChange(accepted.at(0));
+                    }}
+                  />
+
+                  {file && (
+                    <div className="flex flex-col items-center bg-foreground/5 rounded-md overflow-hidden border mt-2 max-w-[100px]">
+                      {file.type.startsWith("image") ? (
+                        <Image
+                          src={URL.createObjectURL(file)}
+                          alt={file.name}
+                          width={100}
+                          height={60}
+                          className="h-[60px] object-cover border-b"
+                        />
+                      ) : (
+                        <span className="text-5xl p-2">
+                          {getFileIcon(file.type)}
+                        </span>
+                      )}
+                      <span className="line-clamp-1 bg-background w-full text-center text-xs">
+                        {file.name}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
