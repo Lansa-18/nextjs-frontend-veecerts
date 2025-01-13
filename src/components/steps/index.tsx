@@ -6,7 +6,7 @@ interface StepsProps {
     imageAlt: string;
     title: string;
     content: string;
-    className: string;
+    className?: string;
     width: number;
     height: number;
 }
@@ -21,7 +21,7 @@ const Steps: React.FC<StepsProps> = ({
     className = ''
 }) => {
     return(
-        <div className='flex flex-col space-y-6 flex items-center'>
+        <div className='flex-col space-y-6 flex items-center'>
             <div className={`inline-flex items-center justify-center rounded-full w-20 h-20 bg-blue overflow-hidden relative ${className}`}>   
                 <Image alt={imageAlt} src={imageSrc} width={width} height={height} />
             </div>

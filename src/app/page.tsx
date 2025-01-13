@@ -168,7 +168,7 @@ export default function Home() {
           <div className="flex flex-col w-full md:w-[530px] text-center md:text-left">
             <h2 className="text-3xl md:text-5xl font-bold">Our mission.</h2>
             <p className="text-gray leading-loose">
-              Veecert's aims to bring solution to storage and centralization by
+              Veecert&apos;s aims to bring solution to storage and centralization by
               securing storing important documents on cloud and utilizing the
               power of the ICP blockchain.
             </p>

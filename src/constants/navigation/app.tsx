@@ -2,9 +2,7 @@ import { SidebarGroup } from "./types";
 import MageDashboard2 from "~icons/mage/dashboard-2.jsx";
 import BiFolder from "~icons/bi/folder.jsx";
 import BiFilesAlt from "~icons/bi/files-alt.jsx";
-import FluentPeopleTeam48Regular from "~icons/fluent/people-team-48-regular.jsx";
 import MingcuteBill2Line from "~icons/mingcute/bill-2-line.jsx";
-import IconamoonProfile from "~icons/iconamoon/profile.jsx";
 
 export const APP_NAVIGATION: SidebarGroup[] = [
   {

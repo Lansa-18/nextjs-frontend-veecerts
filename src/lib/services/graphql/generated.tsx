@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { gql } from 'urql';
 import * as Urql from 'urql';
 export type Maybe<T> = T | null;
