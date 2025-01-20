@@ -7,6 +7,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.bg-1 {
+  background: linear-gradient(82deg, #313860 2.25%, #151928 79.87%);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
