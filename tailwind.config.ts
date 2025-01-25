@@ -19,6 +19,7 @@ export default {
 			black2: "#333",
 				black3: "#111",
 				'ligblue': 'rgba(0, 229, 255, 1)',
+				'bluey': 'rgba(6, 154, 217, 0.05)',
 			'liblue': 'rgba(0, 159, 220, 0.15)',
 			"grey-border": "rgba(102, 102, 102, 0.50)",
 			"grey-border2": "rgba(102, 102, 102, 0.50)",

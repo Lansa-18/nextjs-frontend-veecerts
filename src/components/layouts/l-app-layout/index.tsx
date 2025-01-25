@@ -13,9 +13,9 @@ const AppLayout: React.FC<Props> = ({ children, variant }) => {
     <SidebarProvider>
       <AppSidebar variant={variant} />
       <SidebarInset>
-        <header>
+        {/* <header>
           <TopNav />
-        </header>
+        </header> */}
         <div>{children}</div>
       </SidebarInset>
     </SidebarProvider>
