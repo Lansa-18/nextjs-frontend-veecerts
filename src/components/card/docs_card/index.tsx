@@ -1,0 +1,33 @@
+import React from "react";
+
+const DocsCard = ({ fileName, savedDate }) => {
+  const fileIcons = {
+    ppt: "/csv1.svg",
+    csv: "/csv.svg",
+    pdf: "/csv3.svg",
+    doc: "/csv2.svg",
+  };
+
+  const fileExtension = fileName.split(".").pop();
+
+  const fileIcon = fileIcons[fileExtension] || "/csv.svg";
+
+  return (
+    <div className="flex flex-col items-center border border-gray-300 p-4 rounded-lg shadow-md bg-white gap-4">
+      <div className='border border-gray-300 p-5 rounded-lg'>
+        <img
+          src={fileIcon}
+          alt={`${fileExtension} icon`}
+          className="w-12 h-12 object-contain"
+        />
+      </div>
+
+      <div className='text-center space-y-2'>
+        <h3 className="text-lg font-semibold">{fileName}</h3>
+        <p className="text-sm text-gray-500">{savedDate}</p>
+      </div>
+    </div>
+  );
+};
+
+export default DocsCard;
