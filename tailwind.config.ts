@@ -11,11 +11,15 @@ export default {
   	extend: {
   		colors: {
 			// colors from figma
+			red5: "#E53E3E",
 			"greyish-white": "#FBFBFB",
+			"greyish-white2": "#F8F9FA",
 			"form-label": "#666",
 			black2: "#333",
 			black3: "#111",
-			grey2: "#A0AEC0",
+			grey7: "#2D3748",
+			grey4: "#A0AEC0",
+			grey5: "#718096",
 			"grey-border": "rgba(102, 102, 102, 0.50)",
 			"grey-border2": "#E2E8F0",
 			blue: "#0D99D5",

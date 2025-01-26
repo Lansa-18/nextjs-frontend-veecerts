@@ -1,4 +1,5 @@
 // import SubscriptionPackages from "@/components/molecules/m-subscription-packages";
+import BillingDetails from "@/components/atoms/a-billing-details";
 import { H2 } from "@/components/ui/typography";
 import Image from "next/image";
 
@@ -18,6 +19,7 @@ const BillingPage = () => {
             />
           </div>
         </section>
+
         <section className="font-poppins text-[14px] font-bold leading-[19.6px] bg-white rounded-[1.5px] mt-[18px] p-[22px]">
           <div className="flex justify-between items-center">
             <h2>Payment Method</h2>
@@ -25,7 +27,8 @@ const BillingPage = () => {
               Add a new card
             </button>
           </div>
-          <article className="flex gap-10">
+
+          <article className="flex gap-10 mt-6">
             <div className="flex items-center rounded-[15px] basis-[50%] border px-[20px] py-[14px] border-grey-border2">
               <Image
                 src="/Mastercard Icon.svg"
@@ -53,6 +56,31 @@ const BillingPage = () => {
               <Image src="/edit.svg" alt="edit-icon" width={12} height={12} />
             </div>
           </article>
+        </section>
+
+        <section className="bg-white font-poppins mt-6 p-[21px] rounded-[15px]">
+          <h2 className="text-[18px] font-bold text-grey7 leading-[25.2px]">
+            Billing Information
+          </h2>
+
+          <BillingDetails
+            userName="Andrew Jones"
+            companyName="Viking Burrito"
+            emailAddress="oliver@burrito.com"
+            vatNum="OEU323424238423D"
+          />
+          <BillingDetails
+            userName="Andrew Jones"
+            companyName="Viking Burrito"
+            emailAddress="oliver@burrito.com"
+            vatNum="OEU323424238423D"
+          />
+          <BillingDetails
+            userName="Andrew Jones"
+            companyName="Viking Burrito"
+            emailAddress="oliver@burrito.com"
+            vatNum="OEU323424238423D"
+          />
         </section>
       </main>
     </div>
