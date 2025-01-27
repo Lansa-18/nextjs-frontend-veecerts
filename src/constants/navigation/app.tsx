@@ -1,23 +1,24 @@
 import { SidebarGroup } from "./types";
-import MageDashboard2 from "~icons/mage/dashboard-2.jsx";
-import BiFolder from "~icons/bi/folder.jsx";
-import BiFilesAlt from "~icons/bi/files-alt.jsx";
-import MingcuteBill2Line from "~icons/mingcute/bill-2-line.jsx";
+import AkarIconsPerson from '~icons/akar-icons/person?width=24px&height=24px';
+import LucideCreditCard from '~icons/lucide/credit-card?width=24px&height=24px';
+import IcOutlineFolderCopy from '~icons/ic/outline-folder-copy?width=24px&height=24px';
+import CilPeople from '~icons/cil/people?width=512px&height=512px';
+import MaterialSymbolsHomeOutlineRounded from '~icons/material-symbols/home-outline-rounded?width=24px&height=24px';
 
 export const APP_NAVIGATION: SidebarGroup[] = [
   {
-    header: "Storage",
+    header: "",
     navs: [
       {
         type: "single",
         name: "Dashboard",
         url: "/app",
-        icon: <MageDashboard2 />,
+        icon: <MaterialSymbolsHomeOutlineRounded />,
       },
       {
         type: "group",
         title: "Folders",
-        icon: <BiFolder />,
+        icon: <IcOutlineFolderCopy />,
         navs: [
           {
             name: "View All",
@@ -41,12 +42,12 @@ export const APP_NAVIGATION: SidebarGroup[] = [
           },
         ],
       },
-      {
-        type: "single",
-        name: "All Files",
-        url: "/app/files",
-        icon: <BiFilesAlt />,
-      },
+      // {
+      //   type: "single",
+      //   name: "All Files",
+      //   url: "/app/files",
+      //   icon: <BiFilesAlt />,
+      // },
     ],
   },
   {
@@ -54,9 +55,21 @@ export const APP_NAVIGATION: SidebarGroup[] = [
     navs: [
       {
         type: "single",
+        name: "Team members",
+        url: "/app/billing",
+        icon: <CilPeople />,
+      },
+      {
+        type: "single",
         name: "Billing",
         url: "/app/billing",
-        icon: <MingcuteBill2Line />,
+        icon: <LucideCreditCard />,
+      },
+      {
+        type: "single",
+        name: "Profile",
+        url: "/app/billing",
+        icon: <AkarIconsPerson />,
       },
     ],
   },
