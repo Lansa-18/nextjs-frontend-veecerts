@@ -26,7 +26,7 @@ const ChartCard: React.FC<CardProps> = ({
         <div>
           <PieChart
             data={data}
-            labels={labels}
+            labels={labels ?? []}
             colors={colors}
             height={20}
             width={20}

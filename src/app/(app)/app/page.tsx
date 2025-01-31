@@ -3,18 +3,10 @@
 import Avatar from "@/components/avatar";
 import Image from "next/image";
 import TabsComponent from "@/components/tabs";
-// import FileStorageSummary from "@/components/atoms/a-file-storage-summary";
-// import UsedStorageChartBreakdown from "@/components/atoms/a-used-storage-breakdown-chart";
-// import UsedStorageChart from "@/components/atoms/a-used-storage-chart";
-// import FolderAssetsTable from "@/components/molecules/m-assets-table";
-// import { H4 } from "@/components/ui/typography";
-import { useClientQuery } from "@/lib/services/graphql/generated";
 import SearchBar from "@/components/search";
 import ChartCard from "@/components/card/chart_card";
-// import Link from "next/link";
 
 const AppDashboard = () => {
-  const [{ fetching, data }] = useClientQuery();
   return (
     <div className="bg-slate-200 min-h-screen">
       <div className="flex flex-col md:flex-row items-center md:items-start p-6 pb-3 justify-between">

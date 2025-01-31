@@ -1,6 +1,12 @@
+import Image from "next/image";
 import React from "react";
 
-const DocsCard = ({ fileName, savedDate }) => {
+interface Props {
+  fileName: string,
+  savedDate: string
+}
+
+const DocsCard: React.FC<Props> = ({ fileName, savedDate }) => {
   const fileIcons = {
     ppt: "/csv1.svg",
     csv: "/csv.svg",
@@ -8,14 +14,14 @@ const DocsCard = ({ fileName, savedDate }) => {
     doc: "/csv2.svg",
   };
 
-  const fileExtension = fileName.split(".").pop();
+  const fileExtension = fileName.split(".").pop() ?? "";
 
-  const fileIcon = fileIcons[fileExtension] || "/csv.svg";
+  const fileIcon = fileIcons[fileExtension as keyof typeof fileIcons] || "/csv.svg";
 
   return (
     <div className="flex flex-col items-center border border-gray-300 p-4 rounded-lg shadow-md bg-white gap-4">
       <div className='border border-gray-300 p-5 rounded-lg'>
-        <img
+        <Image
           src={fileIcon}
           alt={`${fileExtension} icon`}
           className="w-12 h-12 object-contain"
