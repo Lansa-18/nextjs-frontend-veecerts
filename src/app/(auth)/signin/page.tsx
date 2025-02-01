@@ -23,6 +23,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import LoginAuthButton from "@/components/atoms/a-login-auth-button";
+import Link from "next/link";
 
 const formSchema = z.object({
   email: z.string({ message: "Please enter email" }),
@@ -41,9 +42,9 @@ const SigninPage = () => {
 
   React.useEffect(() => {
     if (error && error.graphQLErrors.length > 0) {
-      error.graphQLErrors.map(e => toast.error(e.message))
+      error.graphQLErrors.map((e) => toast.error(e.message));
     }
-  }, [error])
+  }, [error]);
 
   const onSubmit = async (value: FormSchema) => {
     const res = await mutate({
@@ -154,10 +155,12 @@ const SigninPage = () => {
                 icon="/facebook-logo.svg"
                 text="Continue with Facebook"
               />
-              <LoginAuthButton
-                icon="/mail-logo.svg"
-                text="Sign up with Email "
-              />
+              <Link href="/signup">
+                <LoginAuthButton
+                  icon="/mail-logo.svg"
+                  text="Sign up with Email "
+                />
+              </Link>
             </div>
           </div>
         </article>
