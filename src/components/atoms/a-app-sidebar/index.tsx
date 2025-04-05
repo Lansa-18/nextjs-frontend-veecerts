@@ -5,7 +5,6 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupLabel,
@@ -24,6 +23,14 @@ import { useUserQuery } from "@/lib/services/graphql/generated";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
+
+import dynamic from 'next/dynamic';
+
+const Sidebar = dynamic(
+  () => import('@/components/ui/sidebar').then((mod) => mod.Sidebar),
+  { ssr: false }
+);
 
 interface Props {
   variant?: "app" | "admin";

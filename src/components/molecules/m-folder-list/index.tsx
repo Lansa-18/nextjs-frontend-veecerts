@@ -3,13 +3,12 @@
 import EmptyList from "@/components/atoms/a-empty-list";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { QUERY_KEYS } from "@/constants/queryKeys";
 import { USR_STATE_KEYS } from "@/constants/urlState";
-import {
-  Folder,
-  Paginated_1,
-} from "@/lib/services/icp/declarations/backend.did";
+import { Paginated_1 } from "@/lib/services/icp/declarations/backend.did";
 import { useUrlState } from "@/lib/utils/urlState";
 import { agentAtom } from "@/stores/atoms/icp-agents";
+import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -21,29 +20,47 @@ interface Props {
 const FolderList: React.FC<Props> = ({ variant }) => {
   const router = useRouter();
   const store = useAtomValue(agentAtom);
-  const [clientFolders, setClientFolders] = React.useState<Folder[]>([]);
-  const [fetching, setFetching] = React.useState(false);
   const [opts, setOpts] = useUrlState<[] | [Paginated_1]>(
     USR_STATE_KEYS.FORLDER_OPTS,
     [],
   );
-  //
-  //React.useEffect(() => {
-  //  if (store.profile?.principal) {
-  //    setFetching(true);
-  //    store.backendActor
-  //      ?.client_folders(store.profile?.principal.toString(), opts)
-  //      .then((res) => {
-  //        setClientFolders(res);
-  //        setFetching(false);
-  //      });
-  //  }
-  //}, [opts, store.backendActor, store.profile?.principal]);
+
+  React.useEffect(() => {
+    setOpts([
+      {
+        opts: [
+          {
+            ordering: [
+              {
+                last_updated: [variant === "recent" ? true : false],
+                date_added: [],
+              },
+            ],
+            filter: [],
+          },
+        ],
+        offset: [BigInt(0)],
+        limit: [BigInt(0)],
+      },
+    ]);
+  }, [variant, setOpts]);
+
+  const query = useQuery({
+    queryKey: [QUERY_KEYS.CLIENT_FOLDERS, store.profile?.principal.toString()],
+    queryFn: () =>
+      store.backendActor?.client_folders(
+        store.profile?.principal.toString() ?? "",
+        opts,
+      ) ??
+      new Promise<[]>((res) => {
+        res([]);
+      }),
+  });
 
   return (
     <div className="py-2">
       <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-        {clientFolders.map((item) => (
+        {query.data?.map((item) => (
           <div
             onDoubleClick={() => router.push(`/app/folders/${item.uuid}`)}
             className="w-full cursor-pointer"
@@ -56,7 +73,7 @@ const FolderList: React.FC<Props> = ({ variant }) => {
             </Card>
           </div>
         ))}
-        {fetching &&
+        {query.isFetching &&
           Array.from({ length: 6 }).map((_, index) => (
             <Card
               key={index}
@@ -70,7 +87,7 @@ const FolderList: React.FC<Props> = ({ variant }) => {
             </Card>
           ))}
       </ul>
-      {!fetching && (clientFolders ?? []).length === 0 && (
+      {!query.isFetching && (query.data ?? []).length === 0 && (
         <EmptyList label={`No ${variant} folders found`} />
       )}
     </div>

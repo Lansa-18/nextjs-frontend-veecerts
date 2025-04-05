@@ -1,3 +1,5 @@
+"use client";
+
 import AppSidebar from "@/components/atoms/a-app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import React from "react";

@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { useWallet } from "@/hooks/plug-wallet";
 import {
-  SubscriptionPackagesQuery,
   useClientQuery,
   useCreateUpdateClientPackageSubscriptionMutation,
   useUserQuery,
@@ -14,9 +13,10 @@ import toast from "react-hot-toast";
 import MaterialSymbolsCheckCircleOutlineRounded from "~icons/material-symbols/check-circle-outline-rounded.jsx";
 import { v4 as uuid4 } from "uuid";
 import { RequestTransferArgs } from "@/hooks/plug-wallet/types";
+import { SubscriptionPackage } from "@/lib/services/icp/declarations/backend.did";
 
 interface Props {
-  subscriptionPackage?: SubscriptionPackagesQuery["subscriptionPackages"][0];
+  subscriptionPackage?: SubscriptionPackage;
 }
 
 const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
@@ -106,7 +106,7 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
             <span className="font-medium">Storage Capacity</span>
           </div>
           <span className="font-bold text-primary/80">
-            {subscriptionPackage?.storageCapacityMb.toLocaleString()} MB
+            {subscriptionPackage?.storage_capacity_mb.toLocaleString()} MB
           </span>
         </div>
 
@@ -118,7 +118,7 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
             <span className="font-medium">Monthly Requests</span>
           </div>
           <span className="font-bold text-primary/80">
-            {subscriptionPackage?.monthlyRequests.toLocaleString()}
+            {subscriptionPackage?.monthly_requests.toLocaleString()}
           </span>
         </div>
 
@@ -130,7 +130,7 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
             <span className="font-medium">Max Allowed Session</span>
           </div>
           <span className="font-bold text-primary/80">
-            {subscriptionPackage?.maxAllowedSessions.toLocaleString()}
+            {subscriptionPackage?.max_allowed_sessions.toLocaleString()}
           </span>
         </div>
       </div>

@@ -1,5 +1,12 @@
-import AppLayout from "@/components/layouts/l-app-layout";
+"use client";
+
 import React from "react";
+import dynamic from "next/dynamic";
+
+const AppLayout = dynamic(
+  () => import("@/components/layouts/l-app-layout").then((mod) => mod),
+  { ssr: false },
+);
 
 interface Props {
   children?: React.ReactNode;

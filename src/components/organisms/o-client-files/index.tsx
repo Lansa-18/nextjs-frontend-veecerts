@@ -1,6 +1,5 @@
 "use client";
 
-import CardButton from "@/components/atoms/a-card-button";
 import BiFolderPlus from "~icons/bi/folder-plus.jsx";
 import { H4 } from "@/components/ui/typography";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,6 +14,13 @@ import FolderList from "@/components/molecules/m-folder-list";
 import FolderForm from "@/components/atoms/a-folder-form";
 import React from "react";
 import { useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
+
+
+const CardButton = dynamic(
+  () => import("@/components/atoms/a-card-button").then((mod) => mod),
+  { ssr: false },
+);
 
 const ClientFiles = () => {
   const [folderFormOpen, setFolderFormOpen] = React.useState(false);

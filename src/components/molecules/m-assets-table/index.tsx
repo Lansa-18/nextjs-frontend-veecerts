@@ -10,12 +10,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import { USR_STATE_KEYS } from "@/constants/urlState";
 import {
   useClientFolderAssetsQuery,
   useClientAssetsQuery,
 } from "@/lib/services/graphql/generated";
+import { Paginated } from "@/lib/services/icp/declarations/backend.did";
 import { getFileIcon } from "@/lib/utils/jsxElements";
 import { buildIpfsURL } from "@/lib/utils/urls";
+import { useUrlState } from "@/lib/utils/urlState";
+import { agentAtom } from "@/stores/atoms/icp-agents";
+import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 import Image from "next/image";
 import React from "react";
 
@@ -24,19 +31,43 @@ interface Props {
 }
 
 const AssetsTable: React.FC<Props> = ({ folderUuid }) => {
-  const [{ data: faData, fetching: faFetching }] = useClientFolderAssetsQuery({
-    pause: !folderUuid,
-    variables: {
-      folderId: folderUuid ?? "",
-    },
-  });
+  const store = useAtomValue(agentAtom);
+  const [opts, setOpts] = useUrlState<[] | [Paginated]>(
+    USR_STATE_KEYS.ASSET_OPTS,
+    [],
+  );
 
-  const [{ data: aData, fetching: aFetching }] = useClientAssetsQuery({
-    pause: !!folderUuid,
-  });
+  React.useEffect(() => {
+    setOpts([
+      {
+        opts: [
+          {
+            ordering: [
+              {
+                last_updated: [true],
+                date_added: [],
+              },
+            ],
+            filter: [],
+          },
+        ],
+        offset: [BigInt(0)],
+        limit: [BigInt(0)],
+      },
+    ]);
+  }, [setOpts]);
 
-  const assets = faData?.clientFolderAssets ?? aData?.clientAssets ?? [];
-  const fetching = faFetching || aFetching;
+  const query = useQuery({
+    queryKey: [QUERY_KEYS.CLIENT_ASSETS, store.profile?.principal.toString()],
+    queryFn: () =>
+      store.backendActor?.client_assets(
+        store.profile?.principal.toString() ?? "",
+        opts,
+      ) ??
+      new Promise<[]>((res) => {
+        res([]);
+      }),
+  });
 
   return (
     <div className="border rounded-lg overflow-hidden">
@@ -51,43 +82,25 @@ const AssetsTable: React.FC<Props> = ({ folderUuid }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {assets.map((asset) => (
+          {query.data?.map((asset) => (
             <TableRow key={asset.uuid}>
               <TableCell>
                 <div className="flex items-center font-medium gap-2">
-                  <span className="text-lg">
-                    {asset.contentType.startsWith("image") ? (
-                      <Image
-                        width={24}
-                        height={24}
-                        src={buildIpfsURL(asset.ipfsHash)}
-                        className="rounded"
-                        alt={asset.description}
-                      />
-                    ) : (
-                      <span className="text-xl">
-                        {getFileIcon(asset.contentType)}
-                      </span>
-                    )}
-                  </span>
                   <span>{asset.name}</span>
                 </div>
               </TableCell>
               <TableCell>
-                <span>{asset.sizeMb.toFixed(2)} MB</span>
+                <span>{asset.size_mb.toFixed(2)} MB</span>
               </TableCell>
               <TableCell>
-                <span>{asset.contentType}</span>
+                <span>{new Date(asset.date_added).toLocaleDateString()}</span>
               </TableCell>
               <TableCell>
-                <span>{new Date(asset.dateAdded).toLocaleDateString()}</span>
-              </TableCell>
-              <TableCell>
-                <span>{new Date(asset.lastUpdated).toLocaleDateString()}</span>
+                <span>{new Date(asset.last_updated).toLocaleDateString()}</span>
               </TableCell>
             </TableRow>
           ))}
-          {fetching &&
+          {query.isFetching &&
             Array.from({ length: 10 }).map((_, index) => (
               <TableRow key={index}>
                 <TableCell>
@@ -109,7 +122,7 @@ const AssetsTable: React.FC<Props> = ({ folderUuid }) => {
             ))}
         </TableBody>
       </Table>
-      {!fetching && assets.length === 0 && (
+      {!query.isFetching && (query.data ?? []).length === 0 && (
         <EmptyList className="border-none" label="No files found" />
       )}
     </div>

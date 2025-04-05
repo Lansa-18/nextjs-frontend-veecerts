@@ -10,8 +10,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreateUpdateSubscriptionPackageMutation } from "@/lib/services/graphql/generated";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import { agentAtom } from "@/stores/atoms/icp-agents";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 import React from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -41,22 +44,38 @@ const SubscriptionPackageForm: React.FC<Props> = ({ onSuccess }) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
-  const [{ fetching }, mutate] = useCreateUpdateSubscriptionPackageMutation();
+  const store = useAtomValue(agentAtom);
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (value: FormSchema) => {
+      return (
+        store.backendActor?.create_update_subscription_package(
+          [],
+          value.name,
+          Number(value.price),
+          BigInt(value.storageCapacityMb),
+          BigInt(value.monthlyRequests),
+          BigInt(value.maxAllowedSessions),
+        ) ?? new Promise<string>((res) => res("Client not ready"))
+      );
+    },
+    onSuccess: () => {
+      toast.success("Subscription Package Created");
+      onSuccess?.();
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.SUBSCRIPTION_PACKAGES],
+      });
+    },
+    onError: (res) => {
+      console.log({ res });
+      toast.error("Failed to create subscription package");
+    },
+  });
 
   const onSubmit = async (value: FormSchema) => {
-    const res = await mutate({
-      input: {
-        ...value,
-        price: Number(value.price),
-        storageCapacityMb: Number(value.storageCapacityMb),
-        maxAllowedSessions: Number(value.maxAllowedSessions),
-        monthlyRequests: Number(value.monthlyRequests),
-      },
-    });
-    if (res.data?.createUpdateSubscriptionPackage) {
-      toast.success("Subscription package created");
-      onSuccess?.();
-    }
+    mutation.mutate(value);
   };
 
   return (
@@ -132,7 +151,7 @@ const SubscriptionPackageForm: React.FC<Props> = ({ onSuccess }) => {
             )}
           />
         </div>
-        <Button loading={fetching} disabled={fetching}>
+        <Button loading={mutation.isPending} disabled={mutation.isPending}>
           Save
         </Button>
       </form>

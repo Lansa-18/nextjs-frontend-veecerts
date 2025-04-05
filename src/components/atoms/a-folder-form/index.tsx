@@ -12,17 +12,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
-import Dropzone from "shadcn-dropzone";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import Image from "next/image";
-import { useCreateUpdateFolderMutation } from "@/lib/services/graphql/generated";
+import { v4 as uuid4 } from "uuid";
 import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
+import { agentAtom } from "@/stores/atoms/icp-agents";
+import { Folder, Result_2 } from "@/lib/services/icp/declarations/backend.did";
+import { QUERY_KEYS } from "@/constants/queryKeys";
 
 const formSchema = z.object({
   name: z.string({ message: "Please enter file name" }),
-  logo: z.instanceof(File, { message: "Please provide a logo image" }),
   description: z.string({ message: "Please enter file description" }),
 });
 
@@ -33,27 +35,48 @@ interface Props {
 }
 
 const FolderForm: React.FC<Props> = ({ onSuccess }) => {
-  const [image, setImage] = React.useState<File>();
-  const [{ fetching, error }, mutate] = useCreateUpdateFolderMutation();
+  const store = useAtomValue(agentAtom);
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (folder: Folder) => {
+      return (
+        store.backendActor?.create_update_folder(folder) ??
+        new Promise<Result_2>((res) => res({ Err: "client not ready" }))
+      );
+    },
+    onSuccess: () => {
+      toast.success("Folder Created");
+      onSuccess?.();
+      queryClient.invalidateQueries({
+        queryKey: [
+          QUERY_KEYS.CLIENT_FOLDERS,
+          store.profile?.principal.toString(),
+        ],
+      });
+    },
+    onError: (res) => {
+      console.log({ res })
+      toast.error("Failed to create folder")
+    }
+  });
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
   const onSubmit = async (value: FormSchema) => {
-    const res = await mutate({
-      input: value,
+    if (!store.profile?.principal) {
+      toast.error("You must be authenticated to perform this action");
+      return;
+    }
+    mutation.mutate({
+      ...value,
+      uuid: uuid4(),
+      client_id: store.profile.principal.toString(),
+      owner_id: store.profile.principal,
+      date_added: new Date().toISOString(),
+      last_updated: new Date().toISOString(),
     });
-    if (res.data?.createUpdateFolder) {
-      toast.success("Folder Created");
-      onSuccess?.();
-    }
   };
-
-  React.useEffect(() => {
-    if (error && error.graphQLErrors.length > 0) {
-      error.graphQLErrors.map(e => toast.error(e.message))
-    }
-  }, [error])
 
   return (
     <Form {...form}>
@@ -76,42 +99,6 @@ const FolderForm: React.FC<Props> = ({ onSuccess }) => {
         />
         <FormField
           control={form.control}
-          name="logo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Logo</FormLabel>
-              <FormControl>
-                <div>
-                  <Dropzone
-                    accept={{ "image/*": [] }}
-                    dropZoneClassName="py-8"
-                    onDrop={(accepted) => {
-                      setImage(accepted.at(0));
-                      field.onChange(accepted.at(0));
-                    }}
-                  />
-                  {image && (
-                    <div className="flex flex-col items-center bg-foreground/5 rounded-md overflow-hidden border mt-2 max-w-[100px]">
-                      <Image
-                        src={URL.createObjectURL(image)}
-                        alt={image.name}
-                        width={100}
-                        height={60}
-                        className="h-[60px] object-cover border-b"
-                      />
-                      <span className="line-clamp-1 bg-background w-full text-center text-xs">
-                        {image.name}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="description"
           render={({ field }) => (
             <FormItem>
@@ -122,7 +109,7 @@ const FolderForm: React.FC<Props> = ({ onSuccess }) => {
             </FormItem>
           )}
         />
-        <Button loading={fetching} disabled={fetching}>
+        <Button loading={mutation.isPending} disabled={mutation.isPending}>
           Save
         </Button>
       </form>

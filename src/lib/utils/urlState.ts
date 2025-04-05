@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { jsonParse, jsonStringify } from "./json";
 export function useUrlState<T>(
   key: string,
   initialState: T,
@@ -13,7 +14,9 @@ export function useUrlState<T>(
     (value: T) => {
       const callback =
         options?.serialize ||
-        ((value: T) => encodeURIComponent(JSON.stringify(value)));
+        ((value: T) => {
+          return encodeURIComponent(jsonStringify(value));
+        });
 
       return callback(value);
     },
@@ -23,7 +26,9 @@ export function useUrlState<T>(
     (value: string) => {
       const callback =
         options?.deserialize ||
-        ((value: string) => JSON.parse(decodeURIComponent(value)) as T);
+        ((value: string) => {
+          return jsonParse(decodeURIComponent(value));
+        });
 
       return callback(value);
     },
@@ -54,23 +59,26 @@ export function useUrlState<T>(
             ? (newState as (prevState: T) => T)(prevState)
             : newState;
 
-        // Update URL
-        const url = new URL(window.location.href);
-
-        if (nextState === initialState) {
-          url.searchParams.delete(key);
-        } else {
-          url.searchParams.set(key, serialize(nextState));
-        }
-
-        // Update browser history without reload
-        window.history.pushState({}, "", url);
-
         return nextState;
       });
+
+      // Move URL update to useEffect to avoid updating during render
     },
-    [key, serialize, initialState],
+    [setState],
   );
+
+  // Use effect to update URL whenever state changes
+  useEffect(() => {
+    const url = new URL(window.location.href);
+
+    if (state === initialState) {
+      url.searchParams.delete(key);
+    } else {
+      url.searchParams.set(key, serialize(state));
+    }
+
+    window.history.pushState({}, "", url);
+  }, [state, key, serialize, initialState]);
 
   return [state, setUrlState] as const;
 }
