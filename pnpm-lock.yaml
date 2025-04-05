@@ -8,12 +8,27 @@ importers:
 
   .:
     dependencies:
+      '@dfinity/agent':
+        specifier: ^2.4.0
+        version: 2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)
+      '@dfinity/auth-client':
+        specifier: ^2.4.0
+        version: 2.4.0(@dfinity/agent@2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/identity@1.4.0(@dfinity/agent@2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0))(@dfinity/principal@2.4.0)
+      '@dfinity/candid':
+        specifier: ^2.4.0
+        version: 2.4.0(@dfinity/principal@2.4.0)
+      '@dfinity/principal':
+        specifier: ^2.4.0
+        version: 2.4.0
       '@funded-labs/plug-mobile-sdk':
         specifier: ^0.1.3
-        version: 0.1.3(@dfinity/principal@1.4.0)(@peculiar/webcrypto@1.5.0)
+        version: 0.1.3(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0)
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.10.0(react-hook-form@7.54.2(react@18.3.1))
+      '@radix-ui/react-avatar':
+        specifier: ^1.1.3
+        version: 1.1.3(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-collapsible':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -38,6 +53,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.5
         version: 1.1.6(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/react-query':
+        specifier: ^5.71.10
+        version: 5.71.10(react@18.3.1)
       chart.js:
         specifier: ^4.4.7
         version: 4.4.7
@@ -50,6 +68,9 @@ importers:
       graphql:
         specifier: ^16.10.0
         version: 16.10.0
+      jotai:
+        specifier: ^2.12.2
+        version: 2.12.2(@types/react@19.0.7)(react@18.3.1)
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@18.3.1)
@@ -132,6 +153,9 @@ importers:
       '@svgr/plugin-jsx':
         specifier: ^8.1.0
         version: 8.1.0(@svgr/core@8.1.0(typescript@5.7.3))
+      '@tanstack/eslint-plugin-query':
+        specifier: ^5.71.5
+        version: 5.71.5(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3)
       '@types/node':
         specifier: ^20
         version: 20.17.14
@@ -466,10 +490,28 @@ packages:
       '@dfinity/candid': ^1.4.0
       '@dfinity/principal': ^1.4.0
 
+  '@dfinity/agent@2.4.0':
+    resolution: {integrity: sha512-9ez+lgQr09jUonYUw1NRxPG81yGVillKp0hp79WQ3o/XDn6wbDq/YcMh3/62z8PpGJRLyt2+FlE3pxoGlzWHbw==}
+    peerDependencies:
+      '@dfinity/candid': ^2.4.0
+      '@dfinity/principal': ^2.4.0
+
+  '@dfinity/auth-client@2.4.0':
+    resolution: {integrity: sha512-vjCpdFoPOxjrpCEJUZrn8N/MnfuH7m0s13qEfQWJ3hRRb5cjYhLBACl3T1wDSi1mqhi2rT2Y2UVuStThE99/Sg==}
+    peerDependencies:
+      '@dfinity/agent': ^2.4.0
+      '@dfinity/identity': ^2.4.0
+      '@dfinity/principal': ^2.4.0
+
   '@dfinity/candid@1.4.0':
     resolution: {integrity: sha512-PsTJVn63ZM4A/6Xs5coI0zMFevSwJ8hcyh38LdH/92n6wi9UOTis1yc4qL5MZvvRCUAD0c3rVjELL+49E9sPyA==}
     peerDependencies:
       '@dfinity/principal': ^1.4.0
+
+  '@dfinity/candid@2.4.0':
+    resolution: {integrity: sha512-ZVuBIFlWOZOvEZaLtBKE2666rab32XSdHo1BtzdDy36NMvQbRXkZRbIEd7xoZXRud2wK7pk5cNsZULnXghAORg==}
+    peerDependencies:
+      '@dfinity/principal': ^2.4.0
 
   '@dfinity/identity-secp256k1@1.4.0':
     resolution: {integrity: sha512-cNJYPp3KaqeAnlw0R70a+f1tKOjwTvPCAvImQ1Nq3KuSDs9/5al0qUBGUx5zalxSIihGSr3/T9//X5L8pQlNMw==}
@@ -481,8 +523,8 @@ packages:
       '@dfinity/principal': ^1.4.0
       '@peculiar/webcrypto': ^1.4.0
 
-  '@dfinity/principal@1.4.0':
-    resolution: {integrity: sha512-SuTBVlc71ub89ji0WN5/T100zUG2uIMn5x4+We4vS4nJ0R3/Xt89XJsHepjd5SQTSQPOvP7eQ+S8cQKWRz/RkA==}
+  '@dfinity/principal@2.4.0':
+    resolution: {integrity: sha512-gBKCyxrPYKdqHVk/Qh9cfxN0Hnt4BvRYVo5KgNEAOKyoySCIPO39xlcfE6JJzWtLqEftQLMbeSMrLrTHDdMZ5w==}
 
   '@emnapi/runtime@1.3.1':
     resolution: {integrity: sha512-kEBmG8KyqtxJZv+ygbEim+KCGtIq1fC22Ms3S4ziXmYKm8uyoLX0MHONVKwp+9opg390VaKRNt4a7A9NwmpNhw==}
@@ -1154,6 +1196,19 @@ packages:
       '@types/react-dom':
         optional: true
 
+  '@radix-ui/react-avatar@1.1.3':
+    resolution: {integrity: sha512-Paen00T4P8L8gd9bNsRMw7Cbaz85oxiv+hzomsRZgFm2byltPFDtfcoqlWJ8GyZlIBWgLssJlzLCnKU0G0302g==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+
   '@radix-ui/react-collapsible@1.1.2':
     resolution: {integrity: sha512-PliMB63vxz7vggcyq0IxNYk8vGDrLXVWw4+W4B8YnwI1s18x7YZYqlG9PLX7XxAJUi0g2DxP4XKJMFHh/iVh9A==}
     peerDependencies:
@@ -1329,6 +1384,19 @@ packages:
       '@types/react-dom':
         optional: true
 
+  '@radix-ui/react-primitive@2.0.2':
+    resolution: {integrity: sha512-Ec/0d38EIuvDF+GZjcMU/Ze6MxntVJYO/fRlCPhCaVUyPY9WTalHJw54tp9sXeJo3tlShWpy41vQRgLRGOuz+w==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+
   '@radix-ui/react-roving-focus@1.1.1':
     resolution: {integrity: sha512-QE1RoxPGJ/Nm8Qmk0PxP8ojmoaS67i0s7hVssS7KuI2FQoc/uzVlZsqKfQvxPE6D8hICCPHJ4D88zNhT3OOmkw==}
     peerDependencies:
@@ -1370,6 +1438,15 @@ packages:
 
   '@radix-ui/react-slot@1.1.1':
     resolution: {integrity: sha512-RApLLOcINYJA+dMVbOju7MYv1Mb2EBp2nH4HdDzXTSyaR5optlm6Otrz1euW3HbdOR8UmmFK06TD+A9frYWv+g==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@radix-ui/react-slot@1.1.2':
+    resolution: {integrity: sha512-YAKxaiGsSQJ38VzKH86/BPRC4rh+b1Jpa+JneA5LRE7skmLPNAyeG8kPJj/oo4STLvlrs8vkf/iYyc3A5stYCQ==}
     peerDependencies:
       '@types/react': '*'
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
@@ -1618,6 +1695,19 @@ packages:
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
+
+  '@tanstack/eslint-plugin-query@5.71.5':
+    resolution: {integrity: sha512-6EDWMUQc35HEYtZrX4yRP7vBXjUhNLwO0JwLzkV14lNpTlpnPbNUltvgh+cUJBh3awpOuUNNuxTL96BG3azLmw==}
+    peerDependencies:
+      eslint: ^8.57.0 || ^9.0.0
+
+  '@tanstack/query-core@5.71.10':
+    resolution: {integrity: sha512-/fKEY8fO1nbszfrBatzmhJa1nEwIKn0c6Tv2A1ocSA5OiD2GukOIV8nnBbvJRgZb/VIoBy9/N4PVbABI8YQLow==}
+
+  '@tanstack/react-query@5.71.10':
+    resolution: {integrity: sha512-mQYM/ObpL8YMDz8vCoUuHkbe8Yu7NnVRH8aBaBa/3zlufjp1f1VuWjeO3TcumNHfuVMDwEAGinsgwrB7OKADiQ==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@types/d3-array@3.2.1':
     resolution: {integrity: sha512-Y2Jn2idRrLzUfAKV2LyRImR+y4oa2AntrgID95SHJxuMUrkNXmanDSed71sRNZysveJVt1hLLemQZIady0FpEg==}
@@ -2876,6 +2966,9 @@ packages:
   idb-keyval@6.2.1:
     resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
 
+  idb@7.1.1:
+    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
+
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
@@ -3103,6 +3196,18 @@ packages:
 
   jose@5.9.6:
     resolution: {integrity: sha512-AMlnetc9+CV9asI19zHmrgS/WYsWUwCn2R7RzlbJWD7F9eWYUTGyBmU9o6PxngtLGOiDGPRu+Uc4fhKzbpteZQ==}
+
+  jotai@2.12.2:
+    resolution: {integrity: sha512-oN8715y7MkjXlSrpyjlR887TOuc/NLZMs9gvgtfWH/JP47ChwO0lR2ijSwBvPMYyXRAPT+liIAhuBavluKGgtA==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   js-sha3@0.8.0:
     resolution: {integrity: sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==}
@@ -4923,10 +5028,10 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@dfinity/agent@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)':
+  '@dfinity/agent@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)':
     dependencies:
-      '@dfinity/candid': 1.4.0(@dfinity/principal@1.4.0)
-      '@dfinity/principal': 1.4.0
+      '@dfinity/candid': 1.4.0(@dfinity/principal@2.4.0)
+      '@dfinity/principal': 2.4.0
       '@noble/curves': 1.8.1
       '@noble/hashes': 1.7.1
       base64-arraybuffer: 0.2.0
@@ -4934,13 +5039,35 @@ snapshots:
       buffer: 6.0.3
       simple-cbor: 0.4.1
 
-  '@dfinity/candid@1.4.0(@dfinity/principal@1.4.0)':
+  '@dfinity/agent@2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)':
     dependencies:
-      '@dfinity/principal': 1.4.0
+      '@dfinity/candid': 2.4.0(@dfinity/principal@2.4.0)
+      '@dfinity/principal': 2.4.0
+      '@noble/curves': 1.8.1
+      '@noble/hashes': 1.7.1
+      base64-arraybuffer: 0.2.0
+      borc: 2.1.2
+      buffer: 6.0.3
+      simple-cbor: 0.4.1
 
-  '@dfinity/identity-secp256k1@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)':
+  '@dfinity/auth-client@2.4.0(@dfinity/agent@2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/identity@1.4.0(@dfinity/agent@2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0))(@dfinity/principal@2.4.0)':
     dependencies:
-      '@dfinity/agent': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)
+      '@dfinity/agent': 2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)
+      '@dfinity/identity': 1.4.0(@dfinity/agent@2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0)
+      '@dfinity/principal': 2.4.0
+      idb: 7.1.1
+
+  '@dfinity/candid@1.4.0(@dfinity/principal@2.4.0)':
+    dependencies:
+      '@dfinity/principal': 2.4.0
+
+  '@dfinity/candid@2.4.0(@dfinity/principal@2.4.0)':
+    dependencies:
+      '@dfinity/principal': 2.4.0
+
+  '@dfinity/identity-secp256k1@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)':
+    dependencies:
+      '@dfinity/agent': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)
       '@noble/curves': 1.8.1
       '@noble/hashes': 1.7.1
       asn1js: 3.0.5
@@ -4951,16 +5078,25 @@ snapshots:
       - '@dfinity/candid'
       - '@dfinity/principal'
 
-  '@dfinity/identity@1.4.0(@dfinity/agent@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)(@peculiar/webcrypto@1.5.0)':
+  '@dfinity/identity@1.4.0(@dfinity/agent@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0)':
     dependencies:
-      '@dfinity/agent': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)
-      '@dfinity/principal': 1.4.0
+      '@dfinity/agent': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)
+      '@dfinity/principal': 2.4.0
       '@noble/curves': 1.8.1
       '@noble/hashes': 1.7.1
       '@peculiar/webcrypto': 1.5.0
       borc: 2.1.2
 
-  '@dfinity/principal@1.4.0':
+  '@dfinity/identity@1.4.0(@dfinity/agent@2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0)':
+    dependencies:
+      '@dfinity/agent': 2.4.0(@dfinity/candid@2.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)
+      '@dfinity/principal': 2.4.0
+      '@noble/curves': 1.8.1
+      '@noble/hashes': 1.7.1
+      '@peculiar/webcrypto': 1.5.0
+      borc: 2.1.2
+
+  '@dfinity/principal@2.4.0':
     dependencies:
       '@noble/hashes': 1.7.1
 
@@ -5148,12 +5284,12 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@funded-labs/plug-mobile-sdk@0.1.3(@dfinity/principal@1.4.0)(@peculiar/webcrypto@1.5.0)':
+  '@funded-labs/plug-mobile-sdk@0.1.3(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0)':
     dependencies:
-      '@dfinity/agent': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)
-      '@dfinity/candid': 1.4.0(@dfinity/principal@1.4.0)
-      '@dfinity/identity': 1.4.0(@dfinity/agent@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)(@peculiar/webcrypto@1.5.0)
-      '@dfinity/identity-secp256k1': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@1.4.0))(@dfinity/principal@1.4.0)
+      '@dfinity/agent': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)
+      '@dfinity/candid': 1.4.0(@dfinity/principal@2.4.0)
+      '@dfinity/identity': 1.4.0(@dfinity/agent@1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)(@peculiar/webcrypto@1.5.0)
+      '@dfinity/identity-secp256k1': 1.4.0(@dfinity/candid@1.4.0(@dfinity/principal@2.4.0))(@dfinity/principal@2.4.0)
       '@walletconnect/universal-provider': 2.17.5
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -5941,6 +6077,18 @@ snapshots:
       '@types/react': 19.0.7
       '@types/react-dom': 19.0.3(@types/react@19.0.7)
 
+  '@radix-ui/react-avatar@1.1.3(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@radix-ui/react-context': 1.1.1(@types/react@19.0.7)(react@18.3.1)
+      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-use-callback-ref': 1.1.0(@types/react@19.0.7)(react@18.3.1)
+      '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@19.0.7)(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 19.0.7
+      '@types/react-dom': 19.0.3(@types/react@19.0.7)
+
   '@radix-ui/react-collapsible@1.1.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@radix-ui/primitive': 1.1.1
@@ -6102,6 +6250,15 @@ snapshots:
       '@types/react': 19.0.7
       '@types/react-dom': 19.0.3(@types/react@19.0.7)
 
+  '@radix-ui/react-primitive@2.0.2(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@radix-ui/react-slot': 1.1.2(@types/react@19.0.7)(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 19.0.7
+      '@types/react-dom': 19.0.3(@types/react@19.0.7)
+
   '@radix-ui/react-roving-focus@1.1.1(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@radix-ui/primitive': 1.1.1
@@ -6158,6 +6315,13 @@ snapshots:
       '@types/react-dom': 19.0.3(@types/react@19.0.7)
 
   '@radix-ui/react-slot@1.1.1(@types/react@19.0.7)(react@18.3.1)':
+    dependencies:
+      '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.7)(react@18.3.1)
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 19.0.7
+
+  '@radix-ui/react-slot@1.1.2(@types/react@19.0.7)(react@18.3.1)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.7)(react@18.3.1)
       react: 18.3.1
@@ -6418,6 +6582,21 @@ snapshots:
   '@swc/helpers@0.5.15':
     dependencies:
       tslib: 2.8.1
+
+  '@tanstack/eslint-plugin-query@5.71.5(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3)':
+    dependencies:
+      '@typescript-eslint/utils': 8.21.0(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3)
+      eslint: 9.18.0(jiti@2.4.2)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
+  '@tanstack/query-core@5.71.10': {}
+
+  '@tanstack/react-query@5.71.10(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.71.10
+      react: 18.3.1
 
   '@types/d3-array@3.2.1': {}
 
@@ -7713,7 +7892,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.21.0(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.18.0(jiti@2.4.2)))(eslint@9.18.0(jiti@2.4.2)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.21.0(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.18.0(jiti@2.4.2)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -7735,7 +7914,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.18.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.21.0(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@9.18.0(jiti@2.4.2)))(eslint@9.18.0(jiti@2.4.2))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.21.0(eslint@9.18.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@9.18.0(jiti@2.4.2))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -8214,6 +8393,8 @@ snapshots:
 
   idb-keyval@6.2.1: {}
 
+  idb@7.1.1: {}
+
   ieee754@1.2.1: {}
 
   ignore@5.3.2: {}
@@ -8446,6 +8627,11 @@ snapshots:
   jiti@2.4.2: {}
 
   jose@5.9.6: {}
+
+  jotai@2.12.2(@types/react@19.0.7)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 19.0.7
+      react: 18.3.1
 
   js-sha3@0.8.0: {}
 

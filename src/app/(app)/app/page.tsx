@@ -9,18 +9,25 @@ import ChartCard from "@/components/card/chart_card";
 const AppDashboard = () => {
   return (
     <div className="bg-slate-200 min-h-screen">
-      <div className="flex flex-col md:flex-row items-center md:items-start p-6 pb-3 justify-between">
+      <div className="flex flex-col gap-2 xl:flex-row items-center md:items-start p-6 pb-3 justify-between">
         <div>
           <h1 className="font-bold text-4xl">Dashboard</h1>
         </div>
 
-        <div className="flex gap-6 mt-4 md:mt-0">
+        <div className="flex flex-col justify-between w-full xl:w-fit lg:flex-row gap-6 mt-4 md:mt-0">
           <SearchBar />
-          <div className="relative mt-3 md:mt-0">
-            <Image src="/Union.svg" alt="Notification" width={24} height={24} />
-            <span className="top-0 left-4 absolute w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+          <div className="flex flex-row-reverse justify-between md:flex-row px-4 gap-4 items-center">
+            <div className="relative mt-3 md:mt-0">
+              <Image
+                src="/Union.svg"
+                alt="Notification"
+                width={24}
+                height={24}
+              />
+              <span className="top-0 left-4 absolute w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+            </div>
+            <Avatar />
           </div>
-          <Avatar />
         </div>
       </div>
 

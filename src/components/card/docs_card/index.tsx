@@ -24,6 +24,8 @@ const DocsCard: React.FC<Props> = ({ fileName, savedDate }) => {
         <Image
           src={fileIcon}
           alt={`${fileExtension} icon`}
+          width={48}
+          height={48}
           className="w-12 h-12 object-contain"
         />
       </div>
