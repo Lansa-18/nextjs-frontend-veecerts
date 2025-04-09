@@ -24,12 +24,11 @@ import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
 const Sidebar = dynamic(
-  () => import('@/components/ui/sidebar').then((mod) => mod.Sidebar),
-  { ssr: false }
+  () => import("@/components/ui/sidebar").then((mod) => mod.Sidebar),
+  { ssr: false },
 );
 
 interface Props {
@@ -43,7 +42,7 @@ const AppSidebar: React.FC<Props> = ({ variant = "app" }) => {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenuButton className="py-4 pt-8">
-          <Image width={190.33} height={57} src="/veeLogo.svg" alt="Veecerts" /> 
+          <Image width={190.33} height={57} src="/veeLogo.svg" alt="Veecerts" />
           <Link
             className="w-full"
             href={variant === "admin" ? "/admin" : "/app"}
@@ -94,8 +93,10 @@ const AppSidebar: React.FC<Props> = ({ variant = "app" }) => {
                               <SidebarMenuSubItem
                                 key={subItem.url + subItem.name}
                               >
-                                <SidebarMenuSubButton href={subItem.url}>
-                                  <span>{subItem.name}</span>
+                                <SidebarMenuSubButton>
+                                  <Link href={subItem.url}>
+                                    <span>{subItem.name}</span>
+                                  </Link>
                                 </SidebarMenuSubButton>
                               </SidebarMenuSubItem>
                             ))}
@@ -106,9 +107,12 @@ const AppSidebar: React.FC<Props> = ({ variant = "app" }) => {
                   ) : (
                     <SidebarMenu key={inav.url + inav.name}>
                       <SidebarMenuItem>
-                          <SidebarMenuButton>
+                        <SidebarMenuButton>
                           {inav.icon}
-                          <Link className="w-full text-base font-medium" href={inav.url}>
+                          <Link
+                            className="w-full text-base font-medium"
+                            href={inav.url}
+                          >
                             <span>{inav.name}</span>
                           </Link>
                         </SidebarMenuButton>

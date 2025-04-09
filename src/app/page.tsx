@@ -10,6 +10,7 @@ import PricingTable from "@/components/pricing";
 import Steps from "@/components/steps";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -35,7 +36,12 @@ export default function Home() {
               process.
             </div>
             <div>
-              <Button variant="primary">Getting Started</Button>
+              <Link
+                href="/signin"
+                className="border-2 rounded-xl px-6 p-1  border-white text-white"
+              >
+                Getting Started
+              </Link>
             </div>
           </div>
 
@@ -168,9 +174,9 @@ export default function Home() {
           <div className="flex flex-col w-full md:w-[530px] text-center md:text-left">
             <h2 className="text-3xl md:text-5xl font-bold">Our mission.</h2>
             <p className="text-gray leading-loose">
-              Veecert&apos;s aims to bring solution to storage and centralization by
-              securing storing important documents on cloud and utilizing the
-              power of the ICP blockchain.
+              Veecert&apos;s aims to bring solution to storage and
+              centralization by securing storing important documents on cloud
+              and utilizing the power of the ICP blockchain.
             </p>
           </div>
           <div>

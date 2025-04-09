@@ -2,6 +2,7 @@ import React from "react";
 import { PlugMobileProvider } from "@funded-labs/plug-mobile-sdk";
 import { PlugWindow, RequestTransferArgs } from "./types";
 import { useWalletStore } from "@/stores/plug-wallet";
+import toast from "react-hot-toast";
 
 export const useWallet = () => {
   const { setError, setConnected, setPublicKey, wallet } = useWalletStore();
@@ -25,6 +26,26 @@ export const useWallet = () => {
         return provider;
       }
     }
+  }, [setError]);
+
+  React.useEffect(() => {
+    if (wallet.error) {
+      toast.error(
+        `${wallet.error.title}${wallet.error.details ? ": " + wallet.error.details : ""}`,
+      );
+    }
+  }, [wallet.error]);
+
+  const getPlug = React.useCallback(() => {
+    const Window = window as PlugWindow;
+    if (!Window.ic?.plug) {
+      setError({
+        title: "Plug not found",
+        details: "Plug extenstion not installed",
+        cause: "desktop-plug-unavailable",
+      });
+    }
+    return Window.ic?.plug;
   }, [setError]);
 
   const checkConnected = React.useCallback(async () => {
@@ -58,41 +79,34 @@ export const useWallet = () => {
             });
         }
       } else {
-        const Window = window as PlugWindow;
-        if (!Window.ic?.plug) {
+        const plug = getPlug();
+        try {
+          const publicKey = plug?.requestConnect();
+          setPublicKey(publicKey);
+          checkConnected();
+        } catch (e) {
           setError({
-            title: "Plug not found",
-            details: "Plug extenstion not installed",
-            cause: "desktop-plug-unavailable",
+            title: "Failed to connect wallet",
+            details: String(e),
           });
-        } else {
-          try {
-            const publicKey = Window.ic.plug.requestConnect();
-            setPublicKey(publicKey);
-            checkConnected();
-          } catch (e) {
-            setError({
-              title: "Failed to connect wallet",
-              details: String(e),
-            });
-          }
         }
       }
     }
-  }, [setPublicKey, setError, mobileProvider, checkConnected]);
+  }, [setPublicKey, setError, mobileProvider, checkConnected, getPlug]);
 
   const requestTransfer = React.useCallback(
     async (args: RequestTransferArgs) => {
+      connect();
       if (typeof window !== "undefined") {
-        const Window = window as PlugWindow;
-        return await Window.ic?.plug?.requestTransfer(args);
+        const plug = getPlug();
+        return await plug?.requestTransfer(args);
       } else {
         throw new Error("window is undefined", {
           cause: "invalid-environment",
         });
       }
     },
-    [],
+    [getPlug],
   );
 
   React.useEffect(() => {

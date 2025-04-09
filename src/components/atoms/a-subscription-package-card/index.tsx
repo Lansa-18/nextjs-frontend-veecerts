@@ -2,11 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { useWallet } from "@/hooks/plug-wallet";
-import {
-  useClientQuery,
-  useCreateUpdateClientPackageSubscriptionMutation,
-  useUserQuery,
-} from "@/lib/services/graphql/generated";
 import { icpToE8s } from "@/lib/utils/currency";
 import React from "react";
 import toast from "react-hot-toast";
@@ -14,6 +9,10 @@ import MaterialSymbolsCheckCircleOutlineRounded from "~icons/material-symbols/ch
 import { v4 as uuid4 } from "uuid";
 import { RequestTransferArgs } from "@/hooks/plug-wallet/types";
 import { SubscriptionPackage } from "@/lib/services/icp/declarations/backend.did";
+import { useAtomValue } from "jotai";
+import { agentAtom } from "@/stores/atoms/icp-agents";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/queryKeys";
 
 interface Props {
   subscriptionPackage?: SubscriptionPackage;
@@ -21,19 +20,39 @@ interface Props {
 
 const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
   const { requestTransfer } = useWallet();
-  const [{ data }] = useUserQuery();
-  const [{ data: clientData }] = useClientQuery();
-  const [{ fetching, error }, mutate] =
-    useCreateUpdateClientPackageSubscriptionMutation();
+  const { backendActor, profile } = useAtomValue(agentAtom);
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: () => {
+      if (!subscriptionPackage?.uuid) {
+        throw new Error("Subscription package not found");
+      }
+      if (backendActor) {
+        return backendActor?.create_update_client_package_subscription(
+          subscriptionPackage?.uuid ??
+            new Promise<string>((res) => res("Failed to subscribe")),
+        );
+      }
+      return new Promise<string>((res) => res("Failed to subscribe"));
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.SUBSCRIPTION_CLIENT],
+      });
+    },
+  });
 
-  React.useEffect(() => {
-    if (error && error.graphQLErrors.length > 0) {
-      error.graphQLErrors.map((e) => toast.error(e.message));
-    }
-  }, [error]);
+  const query = useQuery({
+    queryKey: [QUERY_KEYS.SUBSCRIPTION_CLIENT],
+    queryFn: () =>
+      backendActor?.get_client() ??
+      new Promise<[]>((res) => {
+        res([]);
+      }),
+  });
 
   const handleSubscribe = async () => {
-    if (!data?.user) {
+    if (!profile?.principal || !backendActor) {
       toast.error("You must be authenticated to perform this action");
       return;
     }
@@ -43,11 +62,10 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
     }
     try {
       const amount = icpToE8s(subscriptionPackage.price ?? 1 / 11.06);
-      console.log({ amount });
       const params: RequestTransferArgs = {
         to: process.env.NEXT_PUBLIC_APP_PRINCIPAL_ID ?? "",
         amount: amount > 0 ? amount : 0.000000001,
-        memo: `${data.user.id} x ${uuid4()}`,
+        memo: `${profile.principal.toString()} x ${uuid4()}`,
         opts: {
           created_at_time: {
             timestamp_nanos: new Date().getTime(),
@@ -55,16 +73,10 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
         },
       };
 
-      const res = await requestTransfer(params);
-      console.log({ res });
-      const subRes = await mutate({
-        input: {
-          subscriptionPackageUuid: subscriptionPackage.uuid,
-        },
-      });
-      if (subRes.data?.createUpdateClientPackageSubscription) {
-        toast.success("Subscription success");
-      }
+      console.log({ params });
+
+      await requestTransfer(params);
+      mutation.mutate();
     } catch (err) {
       console.log({ err });
     }
@@ -83,14 +95,14 @@ const SubscriptionPackageCard: React.FC<Props> = ({ subscriptionPackage }) => {
           onClick={handleSubscribe}
           variant="outline"
           className="rounded-lg"
-          loading={fetching}
+          loading={mutation.isPending}
           disabled={
-            fetching ||
-            clientData?.client?.activeSubscription?.subscriptionPackage
-              ?.uuid === subscriptionPackage?.uuid
+            mutation.isPending ||
+            query.data?.at(0)?.active_subscription_uuid.at(0) ===
+              subscriptionPackage?.uuid
           }
         >
-          {clientData?.client?.activeSubscription?.subscriptionPackage?.uuid ===
+          {query.data?.at(0)?.active_subscription_uuid.at(0) ===
           subscriptionPackage?.uuid
             ? "Active Plan"
             : "Select Plan"}

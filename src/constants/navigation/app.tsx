@@ -1,9 +1,10 @@
 import { SidebarGroup } from "./types";
-import AkarIconsPerson from '~icons/akar-icons/person?width=24px&height=24px';
-import LucideCreditCard from '~icons/lucide/credit-card?width=24px&height=24px';
-import IcOutlineFolderCopy from '~icons/ic/outline-folder-copy?width=24px&height=24px';
-import CilPeople from '~icons/cil/people?width=512px&height=512px';
-import MaterialSymbolsHomeOutlineRounded from '~icons/material-symbols/home-outline-rounded?width=24px&height=24px';
+import AkarIconsPerson from "~icons/akar-icons/person?width=24px&height=24px";
+import LucideCreditCard from "~icons/lucide/credit-card?width=24px&height=24px";
+import IcOutlineFolderCopy from "~icons/ic/outline-folder-copy?width=24px&height=24px";
+import CilPeople from "~icons/cil/people?width=512px&height=512px";
+import MaterialSymbolsHomeOutlineRounded from "~icons/material-symbols/home-outline-rounded?width=24px&height=24px";
+import SolarLogout2Outline from "~icons/solar/logout-2-outline.jsx";
 
 export const APP_NAVIGATION: SidebarGroup[] = [
   {
@@ -70,6 +71,12 @@ export const APP_NAVIGATION: SidebarGroup[] = [
         name: "Profile",
         url: "/app/billing",
         icon: <AkarIconsPerson />,
+      },
+      {
+        type: "single",
+        name: "Logout",
+        url: "/signout",
+        icon: <SolarLogout2Outline />,
       },
     ],
   },

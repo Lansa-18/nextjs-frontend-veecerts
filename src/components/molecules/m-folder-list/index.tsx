@@ -57,6 +57,8 @@ const FolderList: React.FC<Props> = ({ variant }) => {
       }),
   });
 
+  console.log(query.data)
+
   return (
     <div className="py-2">
       <ul className="grid gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
