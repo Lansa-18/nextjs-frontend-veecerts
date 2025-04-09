@@ -21,10 +21,14 @@ const SigninPage = () => {
     const authClient = await AuthClient.create();
     await authClient.logout();
     authClient.login({
+      identityProvider: process.env.NEXT_PUBLIC_II_URL,
       maxTimeToLive: BigInt(7 * 24 * 60 * 60 * 1000 * 1000 * 1000),
       onSuccess: async () => {
         const identity = authClient.getIdentity();
-        const agent = await HttpAgent.create({ identity });
+        const agent = await HttpAgent.create({
+          host: process.env.NEXT_PUBLIC_CANISTER_HOST_URL,
+          identity,
+        });
 
         const backendActor = Actor.createActor<_SERVICE>(backendIdlFactory, {
           agent,

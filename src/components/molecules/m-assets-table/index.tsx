@@ -12,18 +12,11 @@ import {
 } from "@/components/ui/table";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { USR_STATE_KEYS } from "@/constants/urlState";
-import {
-  useClientFolderAssetsQuery,
-  useClientAssetsQuery,
-} from "@/lib/services/graphql/generated";
 import { Paginated } from "@/lib/services/icp/declarations/backend.did";
-import { getFileIcon } from "@/lib/utils/jsxElements";
-import { buildIpfsURL } from "@/lib/utils/urls";
 import { useUrlState } from "@/lib/utils/urlState";
 import { agentAtom } from "@/stores/atoms/icp-agents";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
-import Image from "next/image";
 import React from "react";
 
 interface Props {
@@ -60,8 +53,9 @@ const AssetsTable: React.FC<Props> = ({ folderUuid }) => {
   const query = useQuery({
     queryKey: [QUERY_KEYS.CLIENT_ASSETS, store.profile?.principal.toString()],
     queryFn: () =>
-      store.backendActor?.client_assets(
+      store.backendActor?.client_folder_assets(
         store.profile?.principal.toString() ?? "",
+        folderUuid ?? "",
         opts,
       ) ??
       new Promise<[]>((res) => {
