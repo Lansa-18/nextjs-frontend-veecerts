@@ -55,6 +55,7 @@ export const idlFactory = ({ IDL }) => {
     ),
   });
 };
-export const init = ({ IDL }) => {
+
+export const init = () => {
   return [];
 };

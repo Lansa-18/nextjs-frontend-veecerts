@@ -106,7 +106,7 @@ export const useWallet = () => {
         });
       }
     },
-    [getPlug],
+    [getPlug, connect],
   );
 
   React.useEffect(() => {
