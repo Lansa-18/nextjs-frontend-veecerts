@@ -88,7 +88,7 @@ export default function PricingTable() {
   const [yearly, setYearly] = useState<boolean>(true);
 
   return (
-    <div>
+    <div id="pricing">
       {/* Pricing toggle */}
       <div className="flex justify-center">
         <h2 className="text-3xl md:text-5xl font-bold mb-10">Pricing</h2>
@@ -134,67 +134,66 @@ export default function PricingTable() {
       </div>
 
       <div>
-  <div className="p-6 lg:p-2 lg:pt-12 max-w-screen-lg mx-auto grid lg:gap-24 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 items-start">
-    {/* Pricing tab 1 */}
-    <PricingTab
-      yearly={yearly}
-      planName="Lite"
-      price={{ yearly: 0.99, monthly: 1.09 }}
-      planDescription="Billed monthly"
-      features={[
-        "Unlimited placeholder texts",
-        "Consectetur adipiscing elit",
-        "Excepteur sint occaecat cupidatat",
-        "Officia deserunt mollit anim",
-        "Excepteur sint occaecat cupidatat",
-        "Officia deserunt mollit anim",
-        "Excepteur sint occaecat cupidatat",
-      ]}
-      planGb={"50GB"}
-      colorScheme={"liblue"}
-    />
+        <div className="p-6 lg:p-2 lg:pt-12 max-w-screen-lg mx-auto grid lg:gap-24 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 items-start">
+          {/* Pricing tab 1 */}
+          <PricingTab
+            yearly={yearly}
+            planName="Lite"
+            price={{ yearly: 0.99, monthly: 1.09 }}
+            planDescription="Billed monthly"
+            features={[
+              "Unlimited placeholder texts",
+              "Consectetur adipiscing elit",
+              "Excepteur sint occaecat cupidatat",
+              "Officia deserunt mollit anim",
+              "Excepteur sint occaecat cupidatat",
+              "Officia deserunt mollit anim",
+              "Excepteur sint occaecat cupidatat",
+            ]}
+            planGb={"50GB"}
+            colorScheme={"liblue"}
+          />
 
-    {/* Pricing tab 2 */}
-    <PricingTab
-      yearly={yearly}
-      popular={true}
-      planName="Basic"
-      price={{ yearly: 1.99, monthly: 2.09 }}
-      planDescription="Billed monthly"
-      features={[
-        "Unlimited placeholder texts",
-        "Consectetur adipiscing elit",
-        "Excepteur sint occaecat cupidatat",
-        "Officia deserunt mollit anim",
-        "Predefined chunks as necessary",
-        "Officia deserunt mollit anim",
-        "Predefined chunks as necessary",
-      ]}
-      planGb={"100GB"}
-      colorScheme={"blue"}
-    />
+          {/* Pricing tab 2 */}
+          <PricingTab
+            yearly={yearly}
+            popular={true}
+            planName="Basic"
+            price={{ yearly: 1.99, monthly: 2.09 }}
+            planDescription="Billed monthly"
+            features={[
+              "Unlimited placeholder texts",
+              "Consectetur adipiscing elit",
+              "Excepteur sint occaecat cupidatat",
+              "Officia deserunt mollit anim",
+              "Predefined chunks as necessary",
+              "Officia deserunt mollit anim",
+              "Predefined chunks as necessary",
+            ]}
+            planGb={"100GB"}
+            colorScheme={"blue"}
+          />
 
-    {/* Pricing tab 3 */}
-    <PricingTab
-      yearly={yearly}
-      planName="Standard"
-      price={{ yearly: 2.99, monthly: 3.09 }}
-      planDescription="Billed monthly"
-      features={[
-        "Unlimited placeholder texts",
-        "Consectetur adipiscing elit",
-        "Excepteur sint occaecat cupidatat",
-        "Officia deserunt mollit anim",
-        "Predefined chunks as necessary",
-        "Free from repetition",
-        "Free from repetition",
-      ]}
-      planGb={"200GB"}
-      colorScheme={"liblue"}
-    />
-  </div>
-</div>
-
+          {/* Pricing tab 3 */}
+          <PricingTab
+            yearly={yearly}
+            planName="Standard"
+            price={{ yearly: 2.99, monthly: 3.09 }}
+            planDescription="Billed monthly"
+            features={[
+              "Unlimited placeholder texts",
+              "Consectetur adipiscing elit",
+              "Excepteur sint occaecat cupidatat",
+              "Officia deserunt mollit anim",
+              "Predefined chunks as necessary",
+              "Free from repetition",
+              "Free from repetition",
+            ]}
+            planGb={"200GB"}
+            colorScheme={"liblue"}
+          />
+        </div>
+      </div>
     </div>
   );
 }
