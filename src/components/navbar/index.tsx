@@ -8,6 +8,7 @@ import { useAtomValue } from "jotai";
 import { agentAtom } from "@/stores/atoms/icp-agents";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Label } from "recharts";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,6 +23,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { id: "home", label: "Home", href: "/" },
     { id: "pricing", label: "Pricing" },
     { id: "socials", label: "Socials" },
     { id: "teams", label: "Teams", href: "/teams" },
@@ -59,7 +61,7 @@ export default function Navbar() {
         {/* Desktop Navigation Links */}
         <div className="hidden lg:flex gap-5">
           {navLinks.map((link, index) => {
-            if (link.href && link.label === "Teams") {
+            if (link.href) {
               return (
                 <Link
                   className={`text-gray-600 hover:text-gray-800 ${pathName === link.href ? "text-blue" : ""}`}
@@ -119,13 +121,33 @@ export default function Navbar() {
       >
         {/* Mobile Navigation Links */}
         <div className="flex flex-col gap-5 text-gray">
-          {navLinks.map((link, index) => (
-            <Link href="" key={index}>
-              <span className="text-gray-600 hover:text-gray-800">
-                {link.id}
-              </span>
-            </Link>
-          ))}
+          {navLinks.map((link, index) => {
+            if (link.href) {
+              return (
+                <Link
+                  href={link.href}
+                  key={index}
+                  className="text-gray-600 hover:text-gray-800"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                key={index}
+                onClick={() => {
+                  scrollToSection(link.id);
+                  setIsMenuOpen(false);
+                }}
+                className="text-gray-600 hover:text-gray-800 text-left"
+              >
+                {link.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Language and Buttons */}

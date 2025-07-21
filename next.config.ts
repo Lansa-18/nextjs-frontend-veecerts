@@ -7,8 +7,8 @@ const nextConfig: NextConfig = {
       Icons({
         compiler: "jsx",
         jsx: "react",
-        //autoInstall: true,
-      }),
+        autoInstall: true,
+      })
     );
     return config;
   },

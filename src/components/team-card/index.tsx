@@ -23,13 +23,13 @@ export default function TeamCard({
     <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-200 max-w-sm">
       {/* Profile Image */}
       <div className="mb-4">
-        <div className="w-full h-48 relative bg-gray-100 rounded-lg overflow-hidden">
+        <div className="w-full h-72 relative bg-gray-100 rounded-lg overflow-hidden">
           {imageUrl ? (
             <Image
               src={imageUrl}
               alt={`${name}'s profile`}
               fill
-              className="object-cover grayscale"
+              className="object-cover object-top"
             />
           ) : (
             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
