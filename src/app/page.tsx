@@ -2,6 +2,7 @@
 
 import HorCard from "@/components/card/hor_card";
 import VerCard from "@/components/card/ver_card";
+import ContactForm from "@/components/contact-form";
 import FAQ from "@/components/faq";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
@@ -266,39 +267,28 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="bg-liblue p-10 pb-32 pt-28 flex flex-col items-center justify-center w-full">
+        <div className="bg-liblue p-10 pb-32 pt-28 flex flex-col items-center justify-center w-full relative">
           <FAQ />
+          <img
+            className="absolute -top-14 left-0"
+            src="/faq-illustrations.png"
+            alt="faq-illustration"
+          />
         </div>
 
-        <div className="mt-10 p-6 lg:p-20 flex flex-col lg:flex-row gap-20 items-center lg:items-start">
+        <div className="p-6 lg:p-20 flex flex-col lg:flex-row gap-20 items-center bg-[#FAFAFA]">
           {/* Text Section */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left basis-[40%]">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-5">
               Ready to get started?
             </h2>
             <span className="text-gray-700 dark:text-gray-300">
-              File storage and sharing on decentralized storage that suits any
-              business size.
+              Can’t find the answer you’re looking for? Reach out to us using
+              the contact information.
             </span>
           </div>
 
-          {/* Buttons Section */}
-          <div className="flex flex-col lg:flex-row gap-4 mt-7 lg:mt-4">
-            <Button
-              onClick={() => router.push("/signin")}
-              className="w-full lg:w-auto p-6 lg:p-6"
-              variant="secondary"
-            >
-              Log in
-            </Button>
-            <Button
-              onClick={() => router.push("/signup")}
-              className="w-full lg:w-auto p-6 lg:p-6"
-              variant="default"
-            >
-              Create an account
-            </Button>
-          </div>
+          <ContactForm />
         </div>
       </div>
 
