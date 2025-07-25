@@ -20,7 +20,7 @@ interface PricingTabProps {
 }
 
 function PricingTab(props: PricingTabProps) {
-  const { colorScheme, selectedPlan, planType } = props;
+  const { colorScheme, selectedPlan } = props;
 
   return (
     <div className={`w-[359px] h-[592px] p-2 ${props.popular ? "white" : ""}`}>

@@ -63,7 +63,7 @@ export default function FAQ() {
                   NFTs, or Non-Fungible Tokens, are unique digital items that
                   live on a blockchain. Unlike cryptocurrencies like Bitcoin or
                   Ethereum, which are interchangeable (one Bitcoin is always
-                  equal to another), NFTs are one-of-a-kind. They're often used
+                  equal to another), NFTs are one-of-a-kind. They&apos;re often used
                   to prove ownership of digital assets like art, music, videos,
                   collectibles, or even in-game items.
                 </p>
@@ -119,9 +119,9 @@ export default function FAQ() {
                 </summary>
                 <p className="group-open:animate-fadeIn mt-3 text-neutral-600">
                   Batch minting is the process of creating multiple NFTs at
-                  once, instead of minting them one by one. It’s useful if
-                  you’re launching a collection or have a large number of tokens
-                  to create. To batch mint, you'll typically upload a folder of
+                  once, instead of minting them one by one. It&apos;s useful if
+                  you&apos;re launching a collection or have a large number of tokens
+                  to create. To batch mint, you&apos;ll typically upload a folder of
                   your media files (images, videos, etc.) along with a metadata
                   file that includes the details for each NFT.
                 </p>
@@ -148,7 +148,7 @@ export default function FAQ() {
                   </span>
                 </summary>
                 <p className="group-open:animate-fadeIn mt-3 text-neutral-600">
-                  ICP stands for Internet Computer. It’s a detailed description
+                  ICP stands for Internet Computer. It&apos;s a detailed description
                   of the type of company or person who would benefit the most
                   from your product or service—and who brings the most value to
                   your business in return.
@@ -179,9 +179,9 @@ export default function FAQ() {
                   The Internet Computer (ICP) stands out because it allows
                   developers to build fully on-chain applications — not just
                   smart contracts, but the entire backend and frontend — without
-                  relying on traditional cloud services. It’s scalable, fast,
+                  relying on traditional cloud services. It&apos;s scalable, fast,
                   and offers low-cost computation and storage. With features
-                  like chain-key cryptography, reverse gas (users don’t need
+                  like chain-key cryptography, reverse gas (users don&apos;t need
                   tokens to interact), and seamless upgrades, ICP opens the door
                   to building secure, user-friendly apps that feel like modern
                   web experiences but run entirely on the blockchain.
@@ -191,7 +191,7 @@ export default function FAQ() {
             <div className="py-5">
               <details className="group">
                 <summary className="flex cursor-pointer list-none items-center justify-between font-medium">
-                  <span> What’s the benefit of tokenizing documents?</span>
+                  <span> What&apos;s the benefit of tokenizing documents?</span>
                   <span className="transition group-open:rotate-180">
                     <svg
                       fill="none"
@@ -211,7 +211,7 @@ export default function FAQ() {
                 <p className="group-open:animate-fadeIn mt-3 text-neutral-600">
                   Tokenizing breaks a document into smaller pieces—like words,
                   phrases, or sentences—so computers can understand and process
-                  the text more easily. It’s a key first step in tasks like
+                  the text more easily. It&apos;s a key first step in tasks like
                   searching, analyzing, or summarizing documents. By turning
                   text into tokens, systems can recognize patterns, compare
                   meanings, and perform operations like filtering or tagging
@@ -240,13 +240,13 @@ export default function FAQ() {
                   </span>
                 </summary>
                 <p className="group-open:animate-fadeIn mt-3 text-neutral-600">
-                  To get a digital identity, you’ll usually need to register
+                  To get a digital identity, you&apos;ll usually need to register
                   with a trusted provider, this could be your government, a bank,
                   a private company or a decentralized organization such as
-                  Veecerts depending on your location and what service you’re
+                  Veecerts depending on your location and what service you&apos;re
                   using. The process typically involves verifying your
                   real-world identity by submitting documents like a passport,
-                  national ID, or driver’s license but Veecerts makes owning a
+                  national ID, or driver&apos;s license but Veecerts makes owning a
                   digital identity on ICP seamless and easy with just a few
                   clicks.
                 </p>
