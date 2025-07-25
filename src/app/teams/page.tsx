@@ -88,7 +88,7 @@ export default function page() {
               Still have questions?
             </h2>
             <p className="text-sm sm:text-base leading-[20px] text-gray-600">
-              Need more information? We're here to help.
+              Need more information? We&apos;re here to help.
             </p>
           </div>
           <Button variant="default" className="w-full sm:w-auto shrink-0">

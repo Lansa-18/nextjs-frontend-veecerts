@@ -17,7 +17,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -47,11 +47,9 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
     <div className="mx-auto bg-white py-10 px-[35px] rounded-lg shadow-sm font-poppins w-[40%]">
       {/* Header */}
       <div className="mb-6 flex flex-col gap-[25px]">
-        <h2 className="text-4xl font-semibold text-black">
-          Send us a message
-        </h2>
+        <h2 className="text-4xl font-semibold text-black">Send us a message</h2>
         <p className="text-[#21272A] text-lg">
-          We're here to assist you and look forward to hearing from you.
+          We&apos;re here to assist you and look forward to hearing from you.
         </p>
       </div>
 
