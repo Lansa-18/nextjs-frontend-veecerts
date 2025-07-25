@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function FAQ() {
   return (
-    <div >
+    <div>
       <div className="flex flex-col items-center">
         <h2 className="mt-5 text-center text-3xl mb-7 font-bold tracking-tight md:text-5xl">
           FAQ
@@ -150,10 +150,10 @@ export default function FAQ() {
                   </span>
                 </summary>
                 <p className="group-open:animate-fadeIn mt-3 text-neutral-600">
-                  ICP stands for Ideal Customer Profile. It’s a detailed
-                  description of the type of company or person who would benefit
-                  the most from your product or service—and who brings the most
-                  value to your business in return.
+                  ICP stands for Internet Computer. It’s a detailed description
+                  of the type of company or person who would benefit the most
+                  from your product or service—and who brings the most value to
+                  your business in return.
                 </p>
               </details>
             </div>
@@ -243,11 +243,14 @@ export default function FAQ() {
                 </summary>
                 <p className="group-open:animate-fadeIn mt-3 text-neutral-600">
                   To get a digital identity, you’ll usually need to register
-                  with a trusted provider—this could be your government, a bank,
-                  or a private company depending on where you live and what
-                  service you’re using. The process typically involves verifying
-                  your real-world identity by submitting documents like a
-                  passport, national ID, or driver’s license.
+                  with a trusted provider, this could be your government, a bank,
+                  a private company or a decentralized organization such as
+                  Veecerts depending on your location and what service you’re
+                  using. The process typically involves verifying your
+                  real-world identity by submitting documents like a passport,
+                  national ID, or driver’s license but Veecerts makes owning a
+                  digital identity on ICP seamless and easy with just a few
+                  clicks.
                 </p>
               </details>
             </div>

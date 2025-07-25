@@ -120,7 +120,7 @@ export default function Home() {
           <div>
             <Steps
               title="Create an account"
-              content="Urna pharetra fermentum magna eget. Ornare est viverra ut nisl."
+              content="Sign up to get started, it’s quick and free. Get your digital identity with ICP."
               imageSrc="/user-pen 1.svg"
               imageAlt="user"
               width={41}
@@ -130,7 +130,7 @@ export default function Home() {
           <div>
             <Steps
               title="Upload your files"
-              content="Cursus semper ut nulla urna sed vitae ultrices nisi curabitur. Velit egestas dui leo sit non a. Semper non turpis in lacus lorem non."
+              content="Create your folders and access your personalized features."
               imageSrc="/upload 1.svg"
               imageAlt="user"
               width={41}
@@ -140,7 +140,7 @@ export default function Home() {
           <div>
             <Steps
               title="Tokenize Document"
-              content="Dignissim sagittis platea dolor neque viverra. Neque neque platea tortor gravida mus pellentesque dui."
+              content="Convert and hash your important documents to an NFT."
               imageSrc="/link 2.svg"
               imageAlt="user"
               width={41}

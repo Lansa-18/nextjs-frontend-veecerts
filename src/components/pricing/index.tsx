@@ -4,13 +4,15 @@ import { useState } from "react";
 import Image from "next/image";
 
 interface PricingTabProps {
-  yearly: boolean;
+  selectedPlan: "personal" | "hobbie" | "professional";
+  planType: "personal" | "hobbie" | "professional";
   popular?: boolean;
   planName: string;
   planGb: string;
   price: {
-    monthly: number;
-    yearly: number;
+    personal: number;
+    hobbie: number;
+    professional: number;
   };
   planDescription: string;
   features: string[];
@@ -18,7 +20,7 @@ interface PricingTabProps {
 }
 
 function PricingTab(props: PricingTabProps) {
-  const { colorScheme } = props;
+  const { colorScheme, selectedPlan, planType } = props;
 
   return (
     <div className={`w-[359px] h-[592px] p-2 ${props.popular ? "white" : ""}`}>
@@ -45,7 +47,7 @@ function PricingTab(props: PricingTabProps) {
               $
             </span>
             <span className="text-slate-900 dark:text-slate-200 font-bold text-4xl">
-              {props.yearly ? props.price.yearly : props.price.monthly}
+              {props.price[selectedPlan]}
             </span>
             <span className="font-medium">/ month</span>
           </div>
@@ -85,7 +87,9 @@ function PricingTab(props: PricingTabProps) {
 }
 
 export default function PricingTable() {
-  const [yearly, setYearly] = useState<boolean>(true);
+  const [selectedPlan, setSelectedPlan] = useState<
+    "personal" | "hobbie" | "professional"
+  >("personal");
 
   return (
     <div id="pricing">
@@ -94,39 +98,45 @@ export default function PricingTable() {
         <h2 className="text-3xl md:text-5xl font-bold mb-10">Pricing</h2>
       </div>
       <div className="flex justify-start pl-20">
-        <div className="relative flex w-[376px] p-3 bg-liblue rounded-full">
+        <div className="relative flex w-[500px] p-3 bg-liblue rounded-full">
           <span
             className="absolute inset-0 m-1 pointer-events-none"
             aria-hidden="true"
           >
             <span
-              className={`absolute inset-0 w-1/2 bg-blue rounded-full shadow-sm transform transition-transform duration-150 ease-in-out ${
-                yearly ? "translate-x-0" : "translate-x-full"
+              className={`absolute inset-0 w-1/3 bg-black rounded-full shadow-sm transform transition-transform duration-150 ease-in-out ${
+                selectedPlan === "personal"
+                  ? "translate-x-0"
+                  : selectedPlan === "hobbie"
+                    ? "translate-x-full"
+                    : "translate-x-[200%]"
               }`}
             ></span>
           </span>
           <button
             className={`relative flex-1 text-sm font-medium h-8 rounded-full transition-colors duration-150 ease-in-out ${
-              yearly ? "text-white" : "text-black"
+              selectedPlan === "personal" ? "text-white" : "text-black"
             }`}
-            onClick={() => setYearly(true)}
-            aria-pressed={yearly}
+            onClick={() => setSelectedPlan("personal")}
+            aria-pressed={selectedPlan === "personal"}
           >
-            Personal{" "}
-            <span
-              className={`${
-                yearly
-                  ? "text-indigo-200"
-                  : "text-slate-400 dark:text-slate-500"
-              }`}
-            ></span>
+            Personal
           </button>
           <button
             className={`relative flex-1 text-sm font-medium h-8 rounded-full transition-colors duration-150 ease-in-out ${
-              yearly ? "text-black" : "text-white"
+              selectedPlan === "hobbie" ? "text-white" : "text-black"
             }`}
-            onClick={() => setYearly(false)}
-            aria-pressed={yearly}
+            onClick={() => setSelectedPlan("hobbie")}
+            aria-pressed={selectedPlan === "hobbie"}
+          >
+            Hobbie
+          </button>
+          <button
+            className={`relative flex-1 text-sm font-medium h-8 rounded-full transition-colors duration-150 ease-in-out ${
+              selectedPlan === "professional" ? "text-white" : "text-black"
+            }`}
+            onClick={() => setSelectedPlan("professional")}
+            aria-pressed={selectedPlan === "professional"}
           >
             Professional
           </button>
@@ -137,18 +147,16 @@ export default function PricingTable() {
         <div className="p-6 lg:p-2 lg:pt-12 max-w-screen-lg mx-auto grid lg:gap-24 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 items-start">
           {/* Pricing tab 1 */}
           <PricingTab
-            yearly={yearly}
+            selectedPlan={selectedPlan}
+            planType="personal"
             planName="Lite"
-            price={{ yearly: 0.99, monthly: 1.09 }}
+            price={{ personal: 0.0, hobbie: 1.29, professional: 1.59 }}
             planDescription="Billed monthly"
             features={[
-              "Unlimited placeholder texts",
-              "Consectetur adipiscing elit",
-              "Excepteur sint occaecat cupidatat",
-              "Officia deserunt mollit anim",
-              "Excepteur sint occaecat cupidatat",
-              "Officia deserunt mollit anim",
-              "Excepteur sint occaecat cupidatat",
+              "Get your internet identity",
+              "Create personalized folders",
+              "Upload documents",
+              "Store documents",
             ]}
             planGb={"50GB"}
             colorScheme={"liblue"}
@@ -156,19 +164,18 @@ export default function PricingTable() {
 
           {/* Pricing tab 2 */}
           <PricingTab
-            yearly={yearly}
+            selectedPlan={selectedPlan}
+            planType="hobbie"
             popular={true}
             planName="Basic"
-            price={{ yearly: 1.99, monthly: 2.09 }}
+            price={{ personal: 10.99, hobbie: 2.99, professional: 2.99 }}
             planDescription="Billed monthly"
             features={[
-              "Unlimited placeholder texts",
-              "Consectetur adipiscing elit",
-              "Excepteur sint occaecat cupidatat",
-              "Officia deserunt mollit anim",
-              "Predefined chunks as necessary",
-              "Officia deserunt mollit anim",
-              "Predefined chunks as necessary",
+              "Get your internet identity",
+              "Create personalized folders",
+              "Upload documents",
+              "Store documents",
+              "Mint your documents",
             ]}
             planGb={"100GB"}
             colorScheme={"blue"}
@@ -176,18 +183,18 @@ export default function PricingTable() {
 
           {/* Pricing tab 3 */}
           <PricingTab
-            yearly={yearly}
+            selectedPlan={selectedPlan}
+            planType="professional"
             planName="Standard"
-            price={{ yearly: 2.99, monthly: 3.09 }}
+            price={{ personal: 19.99, hobbie: 3.49, professional: 3.99 }}
             planDescription="Billed monthly"
             features={[
-              "Unlimited placeholder texts",
-              "Consectetur adipiscing elit",
-              "Excepteur sint occaecat cupidatat",
-              "Officia deserunt mollit anim",
-              "Predefined chunks as necessary",
-              "Free from repetition",
-              "Free from repetition",
+              "Get your internet identity",
+              "Create personalized folders",
+              "Upload documents",
+              "Store documents",
+              "Mint your documents in batches",
+              "Store as NFTs",
             ]}
             planGb={"200GB"}
             colorScheme={"liblue"}
