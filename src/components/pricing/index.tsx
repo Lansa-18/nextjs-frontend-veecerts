@@ -26,8 +26,8 @@ function PricingTab(props: PricingTabProps) {
     <div className={`w-[359px] h-[592px] p-2 ${props.popular ? "white" : ""}`}>
       <div className="relative pt-14 flex flex-col h-full p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-900 shadow shadow-slate-950/5">
         {props.popular && (
-          <div className="absolute top-0 right-0 mr-6 -mt-4">
-            <div className="inline-flex items-center text-xs font-semibold py-1.5 px-3 bg-emerald-500 text-white rounded-full shadow-sm shadow-slate-950/5">
+          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+            <div className="inline-flex items-center text-xs font-semibold py-2 px-4 bg-gray-800 text-white rounded-full shadow-sm">
               Recommended
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function PricingTable() {
             selectedPlan={selectedPlan}
             planType="personal"
             planName="Lite"
-            price={{ personal: 0.0, hobbie: 1.29, professional: 1.59 }}
+            price={{ personal: 0.0, hobbie: 1.29, professional: 21.59 }}
             planDescription="Billed monthly"
             features={[
               "Get your internet identity",
@@ -168,7 +168,7 @@ export default function PricingTable() {
             planType="hobbie"
             popular={true}
             planName="Basic"
-            price={{ personal: 10.99, hobbie: 2.99, professional: 2.99 }}
+            price={{ personal: 10.99, hobbie: 12.99, professional: 32.99 }}
             planDescription="Billed monthly"
             features={[
               "Get your internet identity",
@@ -186,7 +186,7 @@ export default function PricingTable() {
             selectedPlan={selectedPlan}
             planType="professional"
             planName="Standard"
-            price={{ personal: 19.99, hobbie: 3.49, professional: 3.99 }}
+            price={{ personal: 19.99, hobbie: 23.49, professional: 43.99 }}
             planDescription="Billed monthly"
             features={[
               "Get your internet identity",
