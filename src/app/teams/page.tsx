@@ -3,10 +3,16 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import TeamCard from "@/components/team-card";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
 export default function page() {
+    const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/#reach-us");
+  };
   const members = [
     {
       imageUrl: "/andi-img.png",
@@ -91,7 +97,7 @@ export default function page() {
               Need more information? We&apos;re here to help.
             </p>
           </div>
-          <Button variant="default" className="w-full sm:w-auto shrink-0">
+          <Button onClick={handleClick} variant="default" className="w-full sm:w-auto shrink-0">
             Get in touch
           </Button>
         </article>

@@ -4,27 +4,23 @@ import { useState } from "react";
 import Image from "next/image";
 
 interface PricingTabProps {
-  selectedPlan: "personal" | "hobbie" | "professional";
   planType: "personal" | "hobbie" | "professional";
   popular?: boolean;
   planName: string;
   planGb: string;
-  price: {
-    personal: number;
-    hobbie: number;
-    professional: number;
-  };
+  className?: string;
+  price: string;
   planDescription: string;
   features: string[];
   colorScheme: "blue" | "liblue";
 }
 
 function PricingTab(props: PricingTabProps) {
-  const { colorScheme, selectedPlan } = props;
+  const { colorScheme, className } = props;
 
   return (
     <div className={`w-[359px] h-[592px] p-2 ${props.popular ? "white" : ""}`}>
-      <div className="relative pt-14 flex flex-col h-full p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-900 shadow shadow-slate-950/5">
+      <div className={`relative pt-14 flex ${className}  flex-col h-full p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-900 shadow shadow-slate-950/5`}>
         {props.popular && (
           <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
             <div className="inline-flex items-center text-xs font-semibold py-2 px-4 bg-gray-800 text-white rounded-full shadow-sm">
@@ -47,7 +43,7 @@ function PricingTab(props: PricingTabProps) {
               $
             </span>
             <span className="text-slate-900 dark:text-slate-200 font-bold text-4xl">
-              {props.price[selectedPlan]}
+              {props.price}
             </span>
             <span className="font-medium">/ month</span>
           </div>
@@ -87,9 +83,6 @@ function PricingTab(props: PricingTabProps) {
 }
 
 export default function PricingTable() {
-  const [selectedPlan, setSelectedPlan] = useState<
-    "personal" | "hobbie" | "professional"
-  >("personal");
 
   return (
     <div id="pricing">
@@ -97,7 +90,7 @@ export default function PricingTable() {
       <div className="flex justify-center">
         <h2 className="text-3xl md:text-5xl font-bold mb-10">Pricing</h2>
       </div>
-      <div className="flex justify-start pl-20">
+      {/* <div className="flex justify-start pl-20">
         <div className="relative flex w-[500px] p-3 bg-liblue rounded-full">
           <span
             className="absolute inset-0 m-1 pointer-events-none"
@@ -141,16 +134,15 @@ export default function PricingTable() {
             Professional
           </button>
         </div>
-      </div>
+      </div> */}
 
       <div>
         <div className="p-6 lg:p-2 lg:pt-12 max-w-screen-lg mx-auto grid lg:gap-24 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 items-start">
           {/* Pricing tab 1 */}
           <PricingTab
-            selectedPlan={selectedPlan}
             planType="personal"
             planName="Lite"
-            price={{ personal: 0.0, hobbie: 1.29, professional: 21.59 }}
+            price={'0.0'}
             planDescription="Billed monthly"
             features={[
               "Get your internet identity",
@@ -164,11 +156,11 @@ export default function PricingTable() {
 
           {/* Pricing tab 2 */}
           <PricingTab
-            selectedPlan={selectedPlan}
             planType="hobbie"
+            className={`border-2 border-gray-800`}
             popular={true}
             planName="Basic"
-            price={{ personal: 10.99, hobbie: 12.99, professional: 32.99 }}
+            price={'9.99'}
             planDescription="Billed monthly"
             features={[
               "Get your internet identity",
@@ -183,10 +175,9 @@ export default function PricingTable() {
 
           {/* Pricing tab 3 */}
           <PricingTab
-            selectedPlan={selectedPlan}
             planType="professional"
             planName="Standard"
-            price={{ personal: 19.99, hobbie: 23.49, professional: 43.99 }}
+            price={'19.99'}
             planDescription="Billed monthly"
             features={[
               "Get your internet identity",

@@ -111,7 +111,7 @@ export default function Home() {
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 pt-24 pb-10 px-4 md:px-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 pt-10 md:pt-24 pb-10 px-4 md:px-10">
           <div>
             <Steps
               title="Create an account"
@@ -265,13 +265,13 @@ export default function Home() {
         <div className="bg-liblue p-10 pb-32 pt-28 flex flex-col items-center justify-center w-full relative">
           <FAQ />
           <img
-            className="absolute -top-14 left-0"
+            className="absolute -top-14 left-0 md:block hidden"
             src="/faq-illustrations.png"
             alt="faq-illustration"
           />
         </div>
 
-        <div className="p-6 lg:p-20 flex flex-col lg:flex-row gap-20 items-center bg-[#FAFAFA]">
+        <div className="p-6 lg:p-20 flex flex-col lg:flex-row gap-10 md:gap-20 items-center bg-[#FAFAFA]">
           {/* Text Section */}
           <div className="text-center lg:text-left basis-[40%]">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-5">
@@ -283,7 +283,10 @@ export default function Home() {
             </span>
           </div>
 
+          <div id='reach-us'>
           <ContactForm />
+
+          </div>
         </div>
       </div>
 

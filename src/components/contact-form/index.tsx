@@ -44,7 +44,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
   };
 
   return (
-    <div className="mx-auto bg-white py-10 px-[35px] rounded-lg shadow-sm font-poppins w-[40%]">
+    <div className="mx-auto bg-white py-10 px-[35px] rounded-lg shadow-sm font-poppins w-[90%] md:w-[70%]">
       {/* Header */}
       <div className="mb-6 flex flex-col gap-[25px]">
         <h2 className="text-4xl font-semibold text-black">Send us a message</h2>
