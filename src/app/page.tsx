@@ -2,18 +2,17 @@
 
 import HorCard from "@/components/card/hor_card";
 import VerCard from "@/components/card/ver_card";
+import ContactForm from "@/components/contact-form";
 import FAQ from "@/components/faq";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Percent from "@/components/percent_card";
 import PricingTable from "@/components/pricing";
 import Steps from "@/components/steps";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
   return (
     <>
       <Navbar />
@@ -35,7 +34,12 @@ export default function Home() {
               process.
             </div>
             <div>
-              <Button variant="primary">Getting Started</Button>
+              <Link
+                href="/signin"
+                className="border-2 rounded-xl px-6 p-1  border-white text-white"
+              >
+                Getting Started
+              </Link>
             </div>
           </div>
 
@@ -101,10 +105,8 @@ export default function Home() {
             Get started in a <span className="text-blue">few steps</span>
           </div>
           <span className="text-sm md:text-base lg:text-lg leading-loose md:leading-loose max-w-[90%] md:max-w-[70%] lg:max-w-[844px] pt-2">
-            Mauris ac pretium morbi mauris sed ornare in. Rhoncus morbi
-            malesuada id risus bibendum ut tincidunt risus. Sit rhoncus ultrices
-            congue semper pretium porttitor mi. Accumsan posuere risus sagittis
-            tortor nibh quam. Egestas nec egestas nulla tortor.
+            Access a tokenized world with Veecerts following the simple steps
+            below.
           </span>
         </div>
 
@@ -113,7 +115,7 @@ export default function Home() {
           <div>
             <Steps
               title="Create an account"
-              content="Urna pharetra fermentum magna eget. Ornare est viverra ut nisl."
+              content="Sign up to get started, it’s quick and free. Get your digital identity with ICP."
               imageSrc="/user-pen 1.svg"
               imageAlt="user"
               width={41}
@@ -123,7 +125,7 @@ export default function Home() {
           <div>
             <Steps
               title="Upload your files"
-              content="Cursus semper ut nulla urna sed vitae ultrices nisi curabitur. Velit egestas dui leo sit non a. Semper non turpis in lacus lorem non."
+              content="Create your folders and access your personalized features."
               imageSrc="/upload 1.svg"
               imageAlt="user"
               width={41}
@@ -133,7 +135,7 @@ export default function Home() {
           <div>
             <Steps
               title="Tokenize Document"
-              content="Dignissim sagittis platea dolor neque viverra. Neque neque platea tortor gravida mus pellentesque dui."
+              content="Convert and hash your important documents to an NFT."
               imageSrc="/link 2.svg"
               imageAlt="user"
               width={41}
@@ -168,9 +170,9 @@ export default function Home() {
           <div className="flex flex-col w-full md:w-[530px] text-center md:text-left">
             <h2 className="text-3xl md:text-5xl font-bold">Our mission.</h2>
             <p className="text-gray leading-loose">
-              Veecert&apos;s aims to bring solution to storage and centralization by
-              securing storing important documents on cloud and utilizing the
-              power of the ICP blockchain.
+              Veecert&apos;s aims to bring solution to storage and
+              centralization by securing storing important documents on cloud
+              and utilizing the power of the ICP blockchain.
             </p>
           </div>
           <div>
@@ -260,39 +262,28 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="bg-liblue p-10 pb-32 pt-28 flex flex-col items-center justify-center w-full">
+        <div className="bg-liblue p-10 pb-32 pt-28 flex flex-col items-center justify-center w-full relative">
           <FAQ />
+          <img
+            className="absolute -top-14 left-0"
+            src="/faq-illustrations.png"
+            alt="faq-illustration"
+          />
         </div>
 
-        <div className="mt-10 p-6 lg:p-20 flex flex-col lg:flex-row gap-20 items-center lg:items-start">
+        <div className="p-6 lg:p-20 flex flex-col lg:flex-row gap-20 items-center bg-[#FAFAFA]">
           {/* Text Section */}
-          <div className="text-center lg:text-left">
+          <div className="text-center lg:text-left basis-[40%]">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl mb-5">
               Ready to get started?
             </h2>
             <span className="text-gray-700 dark:text-gray-300">
-              File storage and sharing on decentralized storage that suits any
-              business size.
+              Can’t find the answer you’re looking for? Reach out to us using
+              the contact information.
             </span>
           </div>
 
-          {/* Buttons Section */}
-          <div className="flex flex-col lg:flex-row gap-4 mt-7 lg:mt-4">
-            <Button
-              onClick={() => router.push("/signin")}
-              className="w-full lg:w-auto p-6 lg:p-6"
-              variant="secondary"
-            >
-              Log in
-            </Button>
-            <Button
-              onClick={() => router.push("/signup")}
-              className="w-full lg:w-auto p-6 lg:p-6"
-              variant="default"
-            >
-              Create an account
-            </Button>
-          </div>
+          <ContactForm />
         </div>
       </div>
 

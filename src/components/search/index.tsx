@@ -14,7 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   value = "",
 }) => {
   return (
-    <div className="flex bg-white items-center border border-gray-300 rounded-2xl px-3 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-400">
+    <div className="flex min-h-12 bg-white items-center border border-gray-300 rounded-2xl px-3 py-1 shadow-sm focus-within:ring-2 focus-within:ring-blue-400">
       <Image className="text-gray-400 mr-2" src="/Icon.svg" alt="" width={15} height={15} />
       <input
         type="text"

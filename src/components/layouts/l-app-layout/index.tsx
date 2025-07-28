@@ -1,5 +1,6 @@
+"use client";
+
 import AppSidebar from "@/components/atoms/a-app-sidebar";
-import TopNav from "@/components/molecules/m-top-nav";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import React from "react";
 
@@ -13,9 +14,6 @@ const AppLayout: React.FC<Props> = ({ children, variant }) => {
     <SidebarProvider>
       <AppSidebar variant={variant} />
       <SidebarInset>
-        {/* <header>
-          <TopNav />
-        </header> */}
         <div>{children}</div>
       </SidebarInset>
     </SidebarProvider>

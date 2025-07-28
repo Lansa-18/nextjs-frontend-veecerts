@@ -3,17 +3,29 @@
 import EmptyList from "@/components/atoms/a-empty-list";
 import SubscriptionPackageCard from "@/components/atoms/a-subscription-package-card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useSubscriptionPackagesQuery } from "@/lib/services/graphql/generated";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import { agentAtom } from "@/stores/atoms/icp-agents";
+import { useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
 
 const SubscriptionPackages = () => {
-  const [{ fetching, data }] = useSubscriptionPackagesQuery();
+  const store = useAtomValue(agentAtom);
+  const query = useQuery({
+    queryKey: [QUERY_KEYS.SUBSCRIPTION_PACKAGES],
+    queryFn: () =>
+      store.backendActor?.subscription_packages() ??
+      new Promise<[]>((res) => {
+        res([]);
+      }),
+  });
+
   return (
     <div>
       <ul className="grid 2xl:grid-cols-2 gap-4">
-        {data?.subscriptionPackages.map((item) => (
+        {query.data?.map((item) => (
           <SubscriptionPackageCard key={item.uuid} subscriptionPackage={item} />
         ))}
-        {fetching &&
+        {query.isFetching &&
           Array.from({ length: 5 }).map((_, index) => (
             <Skeleton
               key={index}
@@ -21,7 +33,7 @@ const SubscriptionPackages = () => {
             />
           ))}
       </ul>
-      {!fetching && (data?.subscriptionPackages ?? []).length === 0 && (
+      {!query.isFetching && (query.data ?? []).length === 0 && (
         <EmptyList label="No subscription packages" />
       )}
     </div>

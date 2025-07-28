@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         compiler: "jsx",
         jsx: "react",
         autoInstall: true,
-      }),
+      })
     );
     return config;
   },

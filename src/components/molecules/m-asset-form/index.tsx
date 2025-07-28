@@ -16,9 +16,16 @@ import Dropzone from "shadcn-dropzone";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { useCreateUpdateAssetMutation } from "@/lib/services/graphql/generated";
 import Image from "next/image";
 import { getFileIcon } from "@/lib/utils/jsxElements";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
+import { agentAtom } from "@/stores/atoms/icp-agents";
+import { Asset, Result_1 } from "@/lib/services/icp/declarations/backend.did";
+import { v4 as uuid4 } from "uuid";
+import toast from "react-hot-toast";
+import { uploadToPinata } from "@/lib/utils/pinata";
+import { QUERY_KEYS } from "@/constants/queryKeys";
 
 const formSchema = z.object({
   name: z.string({ message: "Please enter file name" }),
@@ -36,20 +43,55 @@ interface Props {
 
 const AssetForm: React.FC<Props> = ({ folderUuid, onSuccess }) => {
   const [file, setFile] = React.useState<File>();
-  const [{ fetching }, mutate] = useCreateUpdateAssetMutation();
+  const store = useAtomValue(agentAtom);
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
   });
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (value: Asset) => {
+      return (
+        store.backendActor?.create_update_asset(value) ??
+        new Promise<Result_1>((res) => res({ Err: "client not ready" }))
+      );
+    },
+    onSuccess: () => {
+      toast.success("Asset Uploaded");
+      onSuccess?.();
+      queryClient.invalidateQueries({
+        queryKey: [
+          QUERY_KEYS.CLIENT_ASSETS,
+          store.profile?.principal.toString(),
+        ],
+      });
+    },
+    onError: (res) => {
+      console.log({ res });
+      toast.error("Failed to upload assets");
+    },
+  });
+
   const onSubmit = async (value: FormSchema) => {
-    await mutate({
-      input: {
-        folderUuid,
-        name: value.name,
-        file: value.file,
-        description: value.description,
-      },
-    });
+    if (!store.profile?.principal) {
+      toast.error("You must be authenticated to perform this aciton");
+      return;
+    }
+
+    const upload = await uploadToPinata(value.file);
+    const asset: Asset = {
+      folder_uuid: folderUuid,
+      name: value.name,
+      uuid: uuid4(),
+      owner_id: store.profile?.principal,
+      description: value.description,
+      size_mb: upload.PinSize,
+      ipfs_hash: upload.IpfsHash,
+      last_updated: new Date().toISOString(),
+      date_added: new Date().toISOString(),
+    };
+    mutation.mutate(asset);
     onSuccess?.();
   };
 
@@ -126,7 +168,7 @@ const AssetForm: React.FC<Props> = ({ folderUuid, onSuccess }) => {
             </FormItem>
           )}
         />
-        <Button disabled={fetching} loading={fetching}>
+        <Button disabled={mutation.isPending} loading={mutation.isPending}>
           Save
         </Button>
       </form>

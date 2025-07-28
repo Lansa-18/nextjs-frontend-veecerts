@@ -3,6 +3,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import URQLProvider from "@/components/providers/urql";
 import Toaster from "@/components/atoms/a-toaster";
+import JotaiProvider from "@/components/providers/jotai";
+import TanstackProvider from "@/components/providers/tanstack-query";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
@@ -22,9 +24,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${poppins.className} antialiased`}>
+      <body
+        suppressHydrationWarning={true}
+        className={`${poppins.variable} ${poppins.className} antialiased`}
+      >
         <Toaster />
-        <URQLProvider>{children}</URQLProvider>
+        <JotaiProvider>
+          <TanstackProvider>
+            <URQLProvider>{children}</URQLProvider>
+          </TanstackProvider>
+        </JotaiProvider>
       </body>
     </html>
   );

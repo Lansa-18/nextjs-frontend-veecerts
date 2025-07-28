@@ -6,7 +6,7 @@ const TabComponent = () => {
 
   const tabs = ["All", "Documents", "Images","Videos", "Audios", "Others"]; 
   const tabContent = [
-    <DocsPage/>,
+    <DocsPage key=""/>,
     "Content for Tab 2",
     "Content for Tab 3",
   ]; 
