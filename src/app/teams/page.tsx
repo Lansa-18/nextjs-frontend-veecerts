@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
-export default function page() {
+export default function Page() {
     const router = useRouter();
 
   const handleClick = () => {
