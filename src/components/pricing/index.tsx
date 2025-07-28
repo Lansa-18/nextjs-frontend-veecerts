@@ -149,7 +149,7 @@ export default function PricingTable() {
               "Upload documents",
               "Store documents",
             ]}
-            planGb={"50GB"}
+            planGb={"5GB"}
             colorScheme={"liblue"}
           />
 
